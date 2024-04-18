@@ -1,0 +1,219 @@
+<template>
+    <div class="container">
+      <div class="app">
+        <!-- Sidebar -->
+        <Sidebar />
+        <!-- Header -->
+        <Header />
+        <!-- Content -->
+        <router-view />
+      </div>
+      <div class="Isi-Setoran">
+        <div class="Header-Setoran">
+          <div class="setoran-dosen">
+            <h3><i class="bx bxs-book"></i>Setoran</h3>
+          </div>
+        </div>
+      </div>
+      <div class="recycler-view-container">
+        <div>
+        <h2>Mahasiswa</h2>
+        <div class="dropdownsemester">
+        <button><i class="bx bx-menu"></i></button>
+        <div class="dropdownsemester-content">
+            <a href="#">Semester 1</a>
+            <a href="#">Semester 2</a>
+            <a href="#">Semester 3</a>
+            <a href="#">Semester 4</a>
+            <a href="#">Semester 5</a>
+            <a href="#">Semester 6</a>
+            <a href="#">Semester 7</a>
+            <a href="#">Semester 8</a>
+        </div>
+        </div>
+    </div>
+        <div class="recycler-view">
+          <div class="list-item" v-for="item in items" :key="item.id" @click="handleItemClick(item)">
+            <div class="list-item-content">
+              <img :src="item.image" alt="Student Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+              <div class="item-info">
+                <p>Nama: {{ item.name }}</p>
+                <p>NIM: {{ item.nim }}</p>
+                <p>Semester: {{ item.semester }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+  
+  
+  <script setup>
+  import Sidebar from '../components/sidebardosen.vue';
+  import Header from '../components/header.vue';
+  import { ref } from 'vue';
+  import { useRouter } from 'vue-router'; 
+  
+  const items = ref([
+  { id: 1, name: 'Farras Lathief', nim: '12250111328', semester: '4', image: 'src/assets/gambar1.jpg' },
+    { id: 2, name: 'Mahasiswa2', nim: '12345', semester: '3', image: 'src/assets/gambar1.jpg' },
+    { id: 3, name: 'Mahasiswa3', nim: '67890', semester: '2', image: 'src/assets/gambar1.jpg' },
+    { id: 4, name: 'Mahasiswa4', nim: '54321', semester: '1', image: 'src/assets/gambar1.jpg' },
+    { id: 5, name: 'Mahasiswa5', nim: '98765', semester: '5', image: 'src/assets/gambar1.jpg' }
+  ]);
+  
+  const router = useRouter();
+  
+  const handleItemClick = (item) => {
+    router.push(`/InputSetoran/${item.id}`); 
+  };
+  </script>
+  
+
+<style>
+:root {
+	--primary: #4ade80;
+	--primary-alt: #22c55e;
+	--grey: #64748b;
+	--dark: #1e293b;
+	--dark-alt: #334155;
+	--light: #f1f5f9;
+	--sidebar-width: 300px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Fira sans', sans-serif;
+}
+
+body {
+	background: var(--light);
+}
+
+button {
+	cursor: pointer;
+	appearance: none;
+	border: none;
+	outline: none;
+	background: none;
+}
+
+.app {
+	display: flex;
+
+	main {
+		flex: 1 1 0;
+		padding: 2rem;
+
+		@media (max-width: 1024px) {
+			padding-left: 6rem;
+		}
+	}
+}
+
+.Header-Setoran {
+background: #FFFFFF;
+position: absolute;
+top: 75px;
+right: 0px;
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 5px 25px 10px 2px;
+box-sizing: border-box;
+width: calc(100% - 225px); 
+border: 1px solid var(--dark);
+}
+
+.setoran {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.setoran-dosen h3 {
+    margin-left: -550px; 
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recycler-view-container {
+  margin-top: 150px; 
+  margin-left: 200px;
+  width: 1100px;
+}
+
+.recycler-view {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.list-item-content {
+  display: flex;
+  align-items: center;
+}
+
+.item-info {
+  margin-left: 10px;
+}
+
+.list-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.list-item:hover {
+  background-color: var(--primary);
+}
+
+.dropdownsemester {
+  position: absolute;
+  top: 0; 
+  right: 0; 
+  margin-top: 150px; 
+  margin-right: 990px; 
+}
+
+.dropdownsemester button {
+  font-size: 24px; 
+  padding: 5px; 
+}
+
+.dropdownsemester-content{
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 140px; 
+  box-shadow: 0px 8px 16px 0px rgba(2,5,5,5.2);
+  z-index: 1;
+}
+
+.dropdownsemester-content a {
+  color: black;
+  padding: 16px 20px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdownsemester-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdownsemester:hover .dropdownsemester-content{
+  display: block;
+}
+
+.dropdownsemester:hover .dropbtn{
+  background-color: #3e8e41;
+}
+
+</style>
