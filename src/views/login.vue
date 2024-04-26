@@ -1,5 +1,6 @@
 <template>
-    <div class="Selamat">
+    <body class="login-body">
+        <div class="Selamat">
         <h1>Selamat Datang Di SAMATIF</h1>
         <span>Setoran Ayat Mahasiswa TIF</span>
     </div>
@@ -14,12 +15,13 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" v-model="password" placeholder="Password Anda" required>
             </div>
-            <div>
-                <a href="#" @click="forgotPassword">Lupa Password?</a>
+            <div >
+                <a   class="lupa"    href="#" @click="forgotPassword">Lupa Password?</a>
             </div>
             <button type="submit" class="login-btn">Login</button>
         </form>
     </div>
+</body>
 </template>
 
 <script>
@@ -58,21 +60,39 @@ export default {
 
 <style>
 
+.login-body{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('../assets/bg-login.jpg');
+}
 .Selamat {
-    margin-top: 50px;
     text-align: center; 
     vertical-align: top; 
+    color:#fff;
 }
 
 #a {
     width: 500px;
     padding: 20px;
     border-radius: 5px;
-    background-color: #3A8980;
+    background-color: transparent;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border:2px rgb solid (255, 255,255, .2);
     margin: 0 auto; 
-    margin-top: 120px; 
+    margin-bottom: 150px;
+    justify-content: center;
+    align-items: center;
+    display: absolute;
+    backdrop-filter: blur(20px);
+    color:#fff;
 }
+
+.lupa{
+color:#fff
+}
+
 h1 {
     margin-top: 0;
     margin-bottom: 20px;

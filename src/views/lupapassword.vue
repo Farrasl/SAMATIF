@@ -1,4 +1,5 @@
 <template>
+    <body class="lupapassword-body">
     <div id="aa">
         <h1>Reset Password</h1>
         <form @submit.prevent="login">
@@ -10,6 +11,7 @@
             <button type="button" class="login-btn" @click="redirectToLogin">Kembali Login</button>
         </form>
     </div>
+</body>
 </template>
 
 <script>
@@ -34,14 +36,27 @@ export default {
 
 <style>
 
+.lupapassword-body{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('../assets/bg-login.jpg');
+}
+
 #aa {
     width: 500px;
     padding: 20px;
     border-radius: 5px;
-    background-color: #3A8980;
+    background-color: transparent;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border:2px rgb solid (255, 255,255, .2);
     margin: 0 auto; 
-    margin-top: 250px; 
+    justify-content: center;
+    align-items: center;
+    display: absolute;
+    backdrop-filter: blur(20px);
+    color:#fff;
 }
 h1 {
     margin-top: 0;

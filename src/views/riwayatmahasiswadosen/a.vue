@@ -74,7 +74,7 @@ const skills = ref([
 	{ lang: "Seminar Kerja Praktek", percent: 0, color: "var(--dark)" },
 	{ lang: "Judul Tugas Akhir", percent: 0, color: "var(--dark)" },
 	{ lang: "Seminar Proposal", percent: 0, color: "var(--dark)" },
-	{ lang: "Sidang tugas Akhir", percent: 0, color: "var(--dark)" },
+	{ lang: "Sidang Tugas Akhir", percent: 0, color: "var(--dark)" },
 ]);
 </script>
 
