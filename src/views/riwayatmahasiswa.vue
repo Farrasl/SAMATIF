@@ -25,22 +25,14 @@
 			<th>Tajwid</th>
             <th>Makhrajul Huruf</th>
         </tr>
-		<tr>
-			<td>1</td>
-            <td>04-04-2024</td>
-			<td>An-Naba’</td>
-			<td>Baik</td>
-			<td>Baik</td>
-            <td>Cukup</td>
-		</tr>
-		<tr>
-			<td>2</td>
-            <td>05-04-2024</td>
-			<td>AN-Naazi’at</td>
-			<td>Baik</td>
-			<td>Baik</td>
-            <td>Cukup</td>
-		</tr>
+		<tr v-for="(item, index) in setoranList" :key="index">
+      <td>{{ index + 1 }}</td>
+      <td>{{ item.tanggal }}</td>
+      <td>{{ item.nama_surah }}</td>
+      <td>{{ item.kelancaran }}</td>
+      <td>{{ item.tajwid }}</td>
+      <td>{{ item.makhrajul_huruf }}</td>
+    </tr>
     </table>
 		
     <div class="box">
@@ -60,15 +52,35 @@
 <script setup>
 import Sidebar from '../components/sidebarmahasiswa.vue';
 import Header from '../components/header.vue';
-import { ref } from 'vue';
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
 
+const setoranList = ref([]);
 const skills = ref([
-	{ lang: "Kerja Praktek", percent: 25, color: "var(--dark)" },
-	{ lang: "Seminar Kerja Praktek", percent: 0, color: "var(--dark)" },
-	{ lang: "Judul Tugas Akhir", percent: 0, color: "var(--dark)" },
-	{ lang: "Seminar Proposal", percent: 0, color: "var(--dark)" },
-	{ lang: "Sidang Tugas Akhir", percent: 0, color: "var(--dark)" },
+  { lang: "Kerja Praktek", percent: 0, color: "var(--dark)" },
+  { lang: "Seminar Kerja Praktek", percent: 0, color: "var(--dark)" },
+  { lang: "Judul Tugas Akhir", percent: 0, color: "var(--dark)" },
+  { lang: "Seminar Proposal", percent: 0, color: "var(--dark)" },
+  { lang: "Sidang Tugas Akhir", percent: 0, color: "var(--dark)" },
 ]);
+
+onMounted(async () => {
+  try {
+    const setoranResponse = await axios.get('/api/setoran/by-nim.php?nim=122501');
+    setoranList.value = setoranResponse.data.setoran; // Adjusted to match response structure
+
+    const skillsResponse = await axios.get('/api/setoran/sudahbelum.php?nim=122501');
+    const { percentages } = skillsResponse.data;
+    percentages.forEach((item) => {
+      const index = skills.value.findIndex((skill) => skill.lang === item.lang);
+      if (index !== -1) {
+        skills.value[index].percent = item.percent;
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+});
 </script>
 
 <style>
@@ -136,7 +148,7 @@ border: 1px solid var(--dark);
 
 
 .riwayat h3 {
-    margin-right: 500px; 
+    margin-right: 475px; 
 }
 
 .riwayat span {

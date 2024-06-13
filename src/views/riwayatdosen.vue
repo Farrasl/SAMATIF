@@ -32,43 +32,57 @@
         </div>
         </div>
 		</div>	
-        <div class="recycler-view">
-          <div class="list-item" v-for="item in items" :key="item.id" @click="handleItemClick(item)">
-            <div class="list-item-content">
-              <img :src="item.image" alt="Student Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
-              <div class="item-info">
-                <p>Nama: {{ item.name }}</p>
-                <p>NIM: {{ item.nim }}</p>
-                <p>Semester: {{ item.semester }}</p>
-              </div>
+    <div class="recycler-view">
+        <div class="list-item" v-for="item in items" :key="item.id" @click="handleItemClick(item)">
+          <div class="list-item-content">
+            <img :src="item.image" alt="Foto Mahasiswa" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+            <div class="item-info">
+              <p>Nama: {{ item.name }}</p>
+              <p>NIM: {{ item.nim }}</p>
+              <p>Semester: {{ item.semester }}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </template>
-  
-  
-  <script setup>
-  import Sidebar from '../components/sidebardosen.vue';
-  import Header from '../components/header.vue';
-  import { ref } from 'vue';
-  import { useRouter } from 'vue-router'; 
-  
-  const items = ref([
-  	{ id: 'a', name: 'Farras Lathief', nim: '12250111328', semester: '4', image: 'src/assets/gambar1.jpg' },
-    { id: 'b', name: 'Mahasiswa2', nim: '12345', semester: '3', image: 'src/assets/gambar1.jpg' },
-    { id: 'c', name: 'Mahasiswa3', nim: '67890', semester: '2', image: 'src/assets/gambar1.jpg' },
-    { id: 'd', name: 'Mahasiswa4', nim: '54321', semester: '1', image: 'src/assets/gambar1.jpg' },
-    { id: 'e', name: 'Mahasiswa5', nim: '98765', semester: '5', image: 'src/assets/gambar1.jpg' }
-  ]);
-  
-  const router = useRouter();
-  
-  const handleItemClick = (item) => {
-    router.push(`/RiwayatMahasiswa/${item.id}`); 
-  };
-  </script>
+  </div>
+</template>
+
+<script setup>
+import Sidebar from '../components/sidebardosen.vue';
+import Header from '../components/header.vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+
+const items = ref([]);
+const router = useRouter();
+
+const fetchData = async () => {
+  try {
+    const response = await axios.get('/api/dosenpa/by-nip.php?nip=19981');
+    const dosen = response.data.dosen[0];
+    items.value = dosen.Mahasiswa.map(item => ({
+      id: item.NIM,
+      name: item.Nama,
+      nim: item.NIM,
+      semester: item.Semester,
+      image: 'src/assets/gambar1.jpg'
+    }));
+  } catch (error) {
+    console.error('Error fetching data', error);
+  }
+};
+
+const handleItemClick = (item) => {
+  router.push({ name: 'riwayatmahasiswadosen', params: { id: item.id, name: item.name, nim: item.nim } });
+};
+
+
+onMounted(() => {
+  fetchData();
+});
+</script>
   
 
 <style>

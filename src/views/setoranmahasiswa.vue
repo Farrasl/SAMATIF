@@ -1,298 +1,138 @@
 <template>
 	<div class="app">
-		<!-- Sidebar -->
-		<Sidebar />
-		<!-- Header -->
-		<Header />
-		<!-- Content -->
-		<router-view />
+	  <!-- Sidebar -->
+	  <Sidebar />
+	  <!-- Header -->
+	  <Header />
+	  <!-- Content -->
+	  <router-view />
 	</div>
-    <div class="Isi-Setoran">
-    <div class="Header-Setoran" >
-        <div class="setoran">
-            <h3><i class="bx bxs-book"></i>Setoran</h3>
-            <span> PA. Siti Ramadhani</span>
-        </div>
-    </div>
+	<div class="Isi-Setoran">
+	  <div class="Header-Setoran">
+		<div class="setoran">
+		  <h3><i class="bx bxs-book"></i>Setoran</h3>
+		  <span>{{ mahasiswa }}</span> <!-- Menampilkan nama mahasiswa -->
+		</div>
+	  </div>
 	</div>
 	<div class="download">
-            <span> Download</span>
-			<i class='bx bxs-download'></i>	</div>
+	  <span> Download</span>
+	  <i class='bx bxs-download'></i>
+	</div>
 	<table border="2" class="Tabel">
-		<tr>
-			<th>No</th>
-			<th>Surah</th>
-			<th>Tanggal</th>
-			<th>Persyaratan</th>
-			<th>Paraf Dosen PA</th>
-		</tr>
-		<tr>
-			<td>1</td>
-			<td>An-Naba’</td>
-			<td>04-04-2024</td>
-			<td>Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>2</td>
-			<td>AN-Naazi’at</td>
-			<td>05-04-2024</td>
-			<td>Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>3</td>
-			<td>'Abasa'</td>
-			<td></td>
-			<td>Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>4</td>
-			<td>At-Takwir</td>
-			<td></td>
-			<td>Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>5</td>
-			<td>Al-Infithar</td>
-			<td></td>
-			<td>Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>6</td>
-			<td>Al-Muthaffifin</td>
-			<td></td>
-			<td>Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>7</td>
-			<td>Al-Insyiqaaq</td>
-			<td></td>
-			<td>Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>8</td>
-			<td>Al-Buruj</td>
-			<td></td>
-			<td>Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>9</td>
-			<td>Ath-Thaariq</td>
-			<td></td>
-			<td>Seminar Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>10</td>
-			<td>Al-A'la</td>
-			<td></td>
-			<td>Seminar Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>11</td>
-			<td>Al-Ghaasyiyah</td>
-			<td></td>
-			<td>Seminar Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>12</td>
-			<td>Al-Fajr</td>
-			<td></td>
-			<td>Seminar Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>13</td>
-			<td>Al-Balad</td>
-			<td></td>
-			<td>Seminar Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>14</td>
-			<td>Asy-Syams</td>
-			<td></td>
-			<td>Seminar Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>15</td>
-			<td>Al-Lail</td>
-			<td></td>
-			<td>Seminar Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>16</td>
-			<td>Adh-Dhuha</td>
-			<td></td>
-			<td>Seminar Kerja Praktek</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>17</td>
-			<td>Al-Insyirah</td>
-			<td></td>
-			<td>Judul Tugas Akhir</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>18</td>
-			<td>At-Tiin</td>
-			<td></td>
-			<td>Judul Tugas Akhir</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>19</td>
-			<td>Al-'Alaq</td>
-			<td></td>
-			<td>Judul Tugas Akhir</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>20</td>
-			<td>Al-Qadr</td>
-			<td></td>
-			<td>Judul Tugas Akhir</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>21</td>
-			<td>Al-Bayyinah</td>
-			<td></td>
-			<td>Judul Tugas Akhir</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>22</td>
-			<td>Az-Zalzalah</td>
-			<td></td>
-			<td> Judul Tugas Akhir</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>23</td>
-			<td>Al-Aadiyaat</td>
-			<td></td>
-			<td>Seminar Proposal</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>24</td>
-			<td>Al-Qaari'ah</td>
-			<td></td>
-			<td>Seminar Proposal</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>25</td>
-			<td>At-Takaatsur</td>
-			<td></td>
-			<td>Seminar Proposal</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>26</td>
-			<td>Al-‘Ashr</td>
-			<td></td>
-			<td>Seminar Proposal</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>27</td>
-			<td>Al-Humazah</td>
-			<td></td>
-			<td>Seminar Proposal</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>28</td>
-			<td>Al-Fiil</td>
-			<td></td>
-			<td>Seminar Proposal</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>29</td>
-			<td>Quraisy</td>
-			<td></td>
-			<td>Seminar Proposal</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>30</td>
-			<td>Al-Maa’un</td>
-			<td></td>
-			<td>Seminar Proposal</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>31</td>
-			<td>Al-Kautsar</td>
-			<td></td>
-			<td>Seminar Proposal</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>32</td>
-			<td>Al-Kaafirun</td>
-			<td></td>
-			<td>Seminar Proposal</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>33</td>
-			<td>An-Nashr</td>
-			<td></td>
-			<td>Seminar Proposal</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>34</td>
-			<td>Al-Lahab</td>
-			<td></td>
-			<td>Seminar Proposal</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>35</td>
-			<td>Al-Ikhlash</td>
-			<td></td>
-			<td>Sidang tugas Akhir</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>36</td>
-			<td>Al-Falaq</td>
-			<td></td>
-			<td>Sidang tugas Akhir</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>37</td>
-			<td>An-Naas</td>
-			<td></td>
-			<td>Sidang tugas Akhir</td>
-			<td></td>
-		</tr>
+	  <tr>
+		<th>No</th>
+		<th>Surah</th>
+		<th>Tanggal</th>
+		<th>Persyaratan</th>
+		<th>Paraf Dosen PA</th>
+	  </tr>
+	  <!-- Menampilkan data setoran -->
+	  <tr v-for="(item, index) in sortedSetoran" :key="index">
+		<td>{{ index + 1 }}</td>
+		<td>{{ item.nama_surah }}</td> <!-- Nama surah -->
+		<td>{{ item.tanggal }}</td> <!-- Tanggal -->
+		<td>{{ item.persyaratan }}</td> <!-- Persyaratan -->
+		<td>{{ item.paraf_dosen }}</td> <!-- Paraf Dosen PA -->
+	  </tr>
+	  <!-- Menampilkan nama-nama surah yang belum disetorkan -->
+	  <tr v-for="(surah, idx) in surahBelumDisetorkan" :key="'surah-' + idx">
+		<td>{{ setoran.length + idx + 1 }}</td>
+		<td>{{ surah.nama_surah }}</td>
+		<td>-</td> <!-- Tanggal kosong karena belum disetorkan -->
+		<td>{{ surah.persyaratan }}</td> <!-- Menampilkan persyaratan sesuai dengan nama surah -->
+		<td>-</td> <!-- Paraf Dosen PA kosong karena belum disetorkan -->
+	  </tr>
 	</table>
-		
-</template>
-
-<script setup>
-import Sidebar from '../components/sidebarmahasiswa.vue';
-import Header from '../components/header.vue';
-</script>
+  </template>
+  
+  <script setup>
+  import { ref, computed, onMounted } from 'vue';
+  import Sidebar from '../components/sidebarmahasiswa.vue';
+  import Header from '../components/header.vue';
+  
+  // Data reactive untuk menyimpan hasil dari endpoint PHP
+  const setoran = ref([]);
+  const mahasiswa = ref('');
+  const surahBelumDisetorkan = ref([]);
+  
+  // Fungsi untuk menentukan persyaratan berdasarkan nama surah
+  function getPersyaratan(namaSurah) {
+	const kerjaPraktek = [
+	  "An-Naba'", "An-Nazi'at", "'Abasa", "At-Takwir", "Al-Infitar", 
+	  "Al-Muthaffifiin", "Al-Insyiqaq", "Al-Buruj"
+	];
+	const seminarKerjaPraktek = [
+	  "At-Tariq", "Al-A'la", "Al-Ghasyiyah", "Al-Fajr", "Al-Balad",
+	  "Asy-Syams", "Al-Lail", "Ad-Duha"
+	];
+	const judulTugasAkhir = [
+	  "Al-Insyirah", "At-Tin", "Al-'Alaq", "Al-Qadr", "Al-Bayyinah",
+	  "Az-Zalzalah"
+	];
+	const seminarProposal = [
+	  "Al-'Adiyat", "Al-Qari'ah", "At-Takasur", "Al-'Asr", "Al-Humazah",
+	  "Al-Fil", "Quraisy", "Al-Ma'un", "Al-Kausar", "Al-Kafirun",
+	  "An-Nasr", "Al-Lahab"
+	];
+	const sidangTugasAkhir = [
+	  "Al-Ikhlas", "Al-Falaq", "An-Nas"
+	];
+  
+	if (kerjaPraktek.includes(namaSurah)) return 'Kerja Praktek';
+	if (seminarKerjaPraktek.includes(namaSurah)) return 'Seminar Kerja Praktek';
+	if (judulTugasAkhir.includes(namaSurah)) return 'Judul Tugas Akhir';
+	if (seminarProposal.includes(namaSurah)) return 'Seminar Proposal';
+	if (sidangTugasAkhir.includes(namaSurah)) return 'Sidang Tugas Akhir';
+	return '-';
+  }
+  
+  // Fungsi untuk mengambil data dari endpoint PHP
+  async function fetchData() {
+	const nim = '122501'; // Ganti dengan NIM yang sesuai
+  
+	try {
+	  // Ambil nama mahasiswa dari endpoint sudahbelum.php
+	  const responseNama = await fetch(`https://samatif.000webhostapp.com/setoran/sudahbelum.php?nim=${nim}`);
+	  const dataNama = await responseNama.json();
+	  mahasiswa.value = dataNama.Nama; // Simpan nama mahasiswa
+  
+	  // Ambil data setoran (nama surah dan tanggal) dari endpoint by-nim.php
+	  const responseSetoran = await fetch(`https://samatif.000webhostapp.com/setoran/by-nim.php?nim=${nim}`);
+	  const dataSetoran = await responseSetoran.json();
+	  setoran.value = dataSetoran.setoran.map(item => ({
+		...item,
+		persyaratan: getPersyaratan(item.nama_surah)
+	  })); // Simpan data setoran dengan persyaratan
+  
+	  // Ambil data semua surah yang seharusnya disetorkan
+	  const semuaSurah = dataNama.percentages.reduce((acc, curr) => acc.concat(curr.surah_names.map(surah => ({ nama_surah: surah }))), []);
+	  
+	  // Tentukan surah yang belum disetorkan
+	  const namaSurahDisetorkan = setoran.value.map(item => item.nama_surah);
+	  surahBelumDisetorkan.value = semuaSurah
+		.filter(surah => !namaSurahDisetorkan.includes(surah.nama_surah))
+		.map(surah => ({
+		  ...surah,
+		  persyaratan: getPersyaratan(surah.nama_surah)
+		}));
+  
+	} catch (error) {
+	  console.error('Error fetching data:', error);
+	}
+  }
+  
+  // Computed property untuk mengurutkan setoran berdasarkan id_surah
+  const sortedSetoran = computed(() => {
+	return [...setoran.value].sort((a, b) => a.id_surah - b.id_surah);
+  });
+  
+  // Panggil fetchData saat komponen dimounted
+  onMounted(() => {
+	fetchData();
+  });
+  </script>
+  
 
 <style>
 :root {

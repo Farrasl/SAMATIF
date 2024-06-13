@@ -7,8 +7,8 @@ import riwayatmahasiswa from '../views/riwayatmahasiswa.vue'
 import berandadosen from '../views/berandadosen.vue'
 import setorandosen from '../views/setorandosen.vue'
 import riwayatdosen from '../views/riwayatdosen.vue'
-import inputsetoran from '../views/inputsetoran/1.vue'
-import riwayatmahasiswadosen from '../views/riwayatmahasiswadosen/a.vue'
+import inputsetoran from '../views/inputsetoran.vue'
+import riwayatmahasiswadosen from '../views/riwayatmahasiswadosen.vue'
 
 export default createRouter({
     history: createWebHistory(),
@@ -54,13 +54,13 @@ export default createRouter({
             component: riwayatdosen
         },  
 		{
-            path: '/InputSetoran/1', 
-            name: 'inputsetoran/1', 
+            path: '/InputSetoran/:id', 
+            name: 'inputsetoran', 
             component: inputsetoran
         },    
 		{
-            path: '/RiwayatMahasiswa/a', 
-            name: 'riwayatmahasiswadosen/a', 
+            path: '/RiwayatMahasiswa/:id', 
+            name: 'riwayatmahasiswadosen', 
             component: riwayatmahasiswadosen
         }            
     ],
