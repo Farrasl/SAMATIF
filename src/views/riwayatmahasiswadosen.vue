@@ -81,7 +81,7 @@
   const fetchData = async () => {
 	try {
 	  const setoranResponse = await axios.get(`/api/setoran/by-nim.php?nim=${nim.value}`);
-	  setoranList.value = setoranResponse.data.setoran; // Disesuaikan agar sesuai dengan struktur respons
+	  setoranList.value = setoranResponse.data.setoran; 
   
 	  const skillsResponse = await axios.get(`/api/setoran/sudahbelum.php?nim=${nim.value}`);
 	  const { percentages } = skillsResponse.data;
@@ -115,7 +115,7 @@
 	  const formData = new FormData();
 	  formData.append('id_setoran', id_setoran);
   
-	  const response = await axios.post('https://samatif.000webhostapp.com/setoran/delete.php', formData);
+	  const response = await axios.post('/api/setoran/delete.php', formData);
 	  console.log('Server Response:', response.data);
   
 	  if (response.data.status === 'success') {

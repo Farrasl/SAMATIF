@@ -67,7 +67,7 @@ const skills = ref([
 onMounted(async () => {
   try {
     const setoranResponse = await axios.get('/api/setoran/by-nim.php?nim=122501');
-    setoranList.value = setoranResponse.data.setoran; // Adjusted to match response structure
+    setoranList.value = setoranResponse.data.setoran; 
 
     const skillsResponse = await axios.get('/api/setoran/sudahbelum.php?nim=122501');
     const { percentages } = skillsResponse.data;

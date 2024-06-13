@@ -110,7 +110,7 @@ const makhrajulHuruf = ref('Pilih Makhrajul Huruf');
 
 onMounted(async () => {
   try {
-    const response = await axios.get('https://samatif.000webhostapp.com/surah/get-all.php');
+    const response = await axios.get('/api/surah/get-all.php');
     surahList.value = response.data;
   } catch (error) {
     console.error('Error fetching surah data:', error);
@@ -144,7 +144,7 @@ const simpanData = async () => {
     formData.append('tajwid', tajwid.value);
     formData.append('makhrajul_huruf', makhrajulHuruf.value);
 
-    const response = await axios.post('https://samatif.000webhostapp.com/setoran/insert.php', formData);
+    const response = await axios.post('/api/setoran/insert.php', formData);
 
     if (response.data.status === 'success') {
       alert('Data setoran berhasil ditambahkan.');

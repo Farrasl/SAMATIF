@@ -52,7 +52,7 @@
       methods: {
           async login() {
               try {
-                  const response = await axios.get('https://samatif.000webhostapp.com/login/user.php', {
+                  const response = await axios.get('/api/login/user.php', {
                       params: {
                           username: this.username,
                           password: this.password

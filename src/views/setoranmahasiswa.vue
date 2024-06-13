@@ -11,7 +11,7 @@
 	  <div class="Header-Setoran">
 		<div class="setoran">
 		  <h3><i class="bx bxs-book"></i>Setoran</h3>
-		  <span>{{ mahasiswa }}</span> <!-- Menampilkan nama mahasiswa -->
+		  <span>{{ mahasiswa }}</span> 
 		</div>
 	  </div>
 	</div>
@@ -27,21 +27,19 @@
 		<th>Persyaratan</th>
 		<th>Paraf Dosen PA</th>
 	  </tr>
-	  <!-- Menampilkan data setoran -->
 	  <tr v-for="(item, index) in sortedSetoran" :key="index">
 		<td>{{ index + 1 }}</td>
-		<td>{{ item.nama_surah }}</td> <!-- Nama surah -->
-		<td>{{ item.tanggal }}</td> <!-- Tanggal -->
-		<td>{{ item.persyaratan }}</td> <!-- Persyaratan -->
-		<td>{{ item.paraf_dosen }}</td> <!-- Paraf Dosen PA -->
+		<td>{{ item.nama_surah }}</td>
+		<td>{{ item.tanggal }}</td> 
+		<td>{{ item.persyaratan }}</td> 
+		<td>{{ item.paraf_dosen }}</td>
 	  </tr>
-	  <!-- Menampilkan nama-nama surah yang belum disetorkan -->
 	  <tr v-for="(surah, idx) in surahBelumDisetorkan" :key="'surah-' + idx">
 		<td>{{ setoran.length + idx + 1 }}</td>
 		<td>{{ surah.nama_surah }}</td>
-		<td>-</td> <!-- Tanggal kosong karena belum disetorkan -->
-		<td>{{ surah.persyaratan }}</td> <!-- Menampilkan persyaratan sesuai dengan nama surah -->
-		<td>-</td> <!-- Paraf Dosen PA kosong karena belum disetorkan -->
+		<td>-</td> 
+		<td>{{ surah.persyaratan }}</td>
+		<td>-</td> 
 	  </tr>
 	</table>
   </template>
@@ -51,12 +49,10 @@
   import Sidebar from '../components/sidebarmahasiswa.vue';
   import Header from '../components/header.vue';
   
-  // Data reactive untuk menyimpan hasil dari endpoint PHP
   const setoran = ref([]);
   const mahasiswa = ref('');
   const surahBelumDisetorkan = ref([]);
   
-  // Fungsi untuk menentukan persyaratan berdasarkan nama surah
   function getPersyaratan(namaSurah) {
 	const kerjaPraktek = [
 	  "An-Naba'", "An-Nazi'at", "'Abasa", "At-Takwir", "Al-Infitar", 
@@ -87,28 +83,23 @@
 	return '-';
   }
   
-  // Fungsi untuk mengambil data dari endpoint PHP
   async function fetchData() {
 	const nim = '122501'; // Ganti dengan NIM yang sesuai
   
 	try {
-	  // Ambil nama mahasiswa dari endpoint sudahbelum.php
-	  const responseNama = await fetch(`https://samatif.000webhostapp.com/setoran/sudahbelum.php?nim=${nim}`);
+	  const responseNama = await fetch(`/api/setoran/sudahbelum.php?nim=${nim}`);
 	  const dataNama = await responseNama.json();
-	  mahasiswa.value = dataNama.Nama; // Simpan nama mahasiswa
+	  mahasiswa.value = dataNama.Nama; 
   
-	  // Ambil data setoran (nama surah dan tanggal) dari endpoint by-nim.php
-	  const responseSetoran = await fetch(`https://samatif.000webhostapp.com/setoran/by-nim.php?nim=${nim}`);
+	  const responseSetoran = await fetch(`/api/setoran/by-nim.php?nim=${nim}`);
 	  const dataSetoran = await responseSetoran.json();
 	  setoran.value = dataSetoran.setoran.map(item => ({
 		...item,
 		persyaratan: getPersyaratan(item.nama_surah)
-	  })); // Simpan data setoran dengan persyaratan
+	  })); 
   
-	  // Ambil data semua surah yang seharusnya disetorkan
 	  const semuaSurah = dataNama.percentages.reduce((acc, curr) => acc.concat(curr.surah_names.map(surah => ({ nama_surah: surah }))), []);
 	  
-	  // Tentukan surah yang belum disetorkan
 	  const namaSurahDisetorkan = setoran.value.map(item => item.nama_surah);
 	  surahBelumDisetorkan.value = semuaSurah
 		.filter(surah => !namaSurahDisetorkan.includes(surah.nama_surah))
@@ -122,12 +113,10 @@
 	}
   }
   
-  // Computed property untuk mengurutkan setoran berdasarkan id_surah
   const sortedSetoran = computed(() => {
 	return [...setoran.value].sort((a, b) => a.id_surah - b.id_surah);
   });
   
-  // Panggil fetchData saat komponen dimounted
   onMounted(() => {
 	fetchData();
   });
