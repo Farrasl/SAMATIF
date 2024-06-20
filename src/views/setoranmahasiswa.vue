@@ -11,7 +11,7 @@
 	  <div class="Header-Setoran">
 		<div class="setoran">
 		  <h3><i class="bx bxs-book"></i>Setoran</h3>
-		  <span>{{ mahasiswa }}</span> 
+		  <span>PA. Siti Ramadhani</span> 
 		</div>
 	  </div>
 	</div>
@@ -87,11 +87,11 @@
 	const nim = '122501'; // Ganti dengan NIM yang sesuai
   
 	try {
-	  const responseNama = await fetch(`/api/setoran/sudahbelum.php?nim=${nim}`);
+	  const responseNama = await fetch(`/api/setoran/sudahbelum.php?nim=122501`);
 	  const dataNama = await responseNama.json();
 	  mahasiswa.value = dataNama.Nama; 
   
-	  const responseSetoran = await fetch(`/api/setoran/by-nim.php?nim=${nim}`);
+	  const responseSetoran = await fetch(`/api/setoran/by-nim.php?nim=122501`);
 	  const dataSetoran = await responseSetoran.json();
 	  setoran.value = dataSetoran.setoran.map(item => ({
 		...item,
@@ -197,8 +197,8 @@ border: 1px solid var(--dark);
 
 .download {
 	margin-top: 150px;
-	margin-right: 25px;
-	margin-left: 1250px;
+	margin-right: 50px;
+	margin-left: 1275px;
 	box-sizing: border-box;
 	border: 1px solid var(--dark);
 }

@@ -1,87 +1,101 @@
 <template>
-    <article>
-      <div class="containerlogin" :class="{'sign-up-active' : signUp}">
-        <div class="overlay-container">
-          <div class="overlay">
-            <div class="overlay-left">
-              <img src="../assets/uinsuska.png" alt="UIN Suska" class="logo">
-              <h2>Hello, Friend!</h2>
-              <p>Please enter your personal details</p>
-              <button class="invert" id="signIn" @click="signUp = !signUp">Login</button>
-            </div>
-            <div class="overlay-right">
-              <img src="../assets/uinsuska.png" alt="UIN Suska" class="logo">
-              <h2>Selamat Datang Silahkan Login</h2>
-            </div>
+  <article>
+    <div class="containerlogin" :class="{'sign-in-active' : signIn}">
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-right">
+            <img src="../assets/uinsuska.png" alt="UIN Suska" class="logo">
+            <h2>Selamat Datang Silahkan Login</h2>
           </div>
         </div>
-        <div id="a">
-        <form class="sign-up" @submit.prevent="register">
-          <h2>Sign Up</h2>
-          <div>Use your email for registration</div>
-          <input type="text" placeholder="Name" v-model="newUsername" required />
-          <input type="password" placeholder="Password" v-model="newPassword" required />
-          <input type="password" placeholder="Confirm Password" v-model="confirmPassword" required />
-          <button type="submit">Sign Up</button>
-        </form>
+      </div>
+      <div id="a">
         <form class="sign-in" @submit.prevent="login">
           <h2>Login</h2>
           <div>Masukkan Akun Anda</div>
           <input type="text" placeholder="Username" v-model="username" required />
           <input type="password" placeholder="Password" v-model="password" required />
           <div>
-           <a class="lupa"    href="#" @click="forgotPassword">Lupa Password?</a>
+            <a class="lupa" href="#" @click="forgotPassword">Lupa Password?</a>
           </div>
           <button type="submit">Login</button>
         </form>
       </div>
     </div>
-    </article>
-  </template>
-  
-  <script>
-  import axios from 'axios';
-  
-  export default {
-      data() {
-          return {
-              username: '',
-              password: '',
+  </article>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      username: '',
+      password: '',
+      signIn: false
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        const loginUrl = '/api/index.php?action=login';
+
+        const response = await axios.post(loginUrl, {
+          username: this.username,
+          password: this.password
+        }, {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
           }
-      },
-      methods: {
-          async login() {
-              try {
-                  const response = await axios.get('/api/login/user.php', {
-                      params: {
-                          username: this.username,
-                          password: this.password
-                      }
-                  });
-  
-                  const data = response.data;
-  
-                  if (data.message === 'Successful login.') {
-                      if (data.Role === 'mahasiswa') {
-                          this.$router.push({ name: 'berandamahasiswa' });
-                      } else if (data.Role === 'dosen') {
-                          this.$router.push({ name: 'berandadosen' });
-                      }
-                  } else {
-                      alert('Login gagal. Username atau password salah.');
-                  }
-              } catch (error) {
-                  console.error('Error:', error);
-                  alert('Terjadi kesalahan saat login.');
-              }
-          },
-          forgotPassword() {
-              this.$router.push({ name: 'lupapassword' });
+        });
+
+        console.log('Response:', response);
+
+        const data = response.data;
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+
+          // Fetch user data using the token
+          const userResponse = await axios.get('/api/index.php?action=get', {
+            headers: {
+              'Authorization': `Bearer ${data.token}`
+            }
+          });
+
+          console.log(userResponse);
+          const userData = userResponse.data;
+
+          // Redirect based on user role
+          if (userData.role === 'mahasiswa') {
+            this.$router.push({ name: 'berandamahasiswa' });
+          } else if (userData.role === 'dosen') {
+            this.$router.push({ name: 'berandadosen' });
           }
+        } else {
+          console.log('Login response does not contain a token:', data.message);
+        }
+      } catch (error) {
+        console.error('Error during login request:', error);
+        if (error.response) {
+          // Server responded with a status other than 200 range
+          console.error('Response data:', error.response.data);
+          console.error('Response status:', error.response.status);
+          console.error('Response headers:', error.response.headers);
+        } else if (error.request) {
+          // Request was made but no response was received
+          console.error('Request data:', error.request);
+        } else {
+          // Something else caused the error
+          console.error('Error message:', error.message);
+        }
+        alert('Terjadi kesalahan saat login.');
       }
+    }
   }
-  </script>
-  
+};
+</script>
   
   <style lang="scss" scoped>
     .containerlogin {
@@ -197,70 +211,59 @@
     }
   
     form {
-      position: absolute;
-      top: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      padding: 10px 60px;
-      width: 50%;
-      height: 100%;
-      text-align: center;
-      background: linear-gradient(to bottom, #efefef, #ccc);
-      transition: all .5s ease-in-out;
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px 60px;
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    background: linear-gradient(to bottom, #efefef, #ccc);
+    transition: all .5s ease-in-out;
   
       div {
         font-size: 1rem;
       }
   
-      .input {
-        background-color: #eee;
-        border: none;
-        padding: 8px 15px;
-        margin: 6px 0;
-        width: calc(100% - 30px);
-        border-radius: 15px;
-        border-bottom: 1px solid #ddd;
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, .4), 
-                          0 -1px 1px #fff, 
-                          0 1px 0 #fff;
-        overflow: hidden;
-  
-        &:focus {
-          outline: none;
-          background-color: #fff;
-        }
+      input {
+      background-color: #eee;
+      border: none;
+      padding: 8px 15px;
+      margin: 6px 0;
+      width: calc(100% - 30px);
+      border-radius: 15px;
+      border-bottom: 1px solid #ddd;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, .4), 
+                        0 -1px 1px #fff, 
+                        0 1px 0 #fff;
+      overflow: hidden;
+
+      &:focus {
+        outline: none;
+        background-color: #fff;
       }
     }
+  }
   
     .sign-in {
       left: 0;
       z-index: 0;
       
     }
-  
-    .sign-up {
-      right:390px;
-      height: 100%;
-      z-index: 0;
-      opacity: 0;
-    }
+
     .forgot-password {
       margin-top: 10px;
       text-align: center;
     }
   
-    .sign-up-active {
+    .sign-in-active {
       .sign-in {
         transform: translateX(-100%);
       }
-  
-      .sign-up {
-        transform: translateX(100%);
-        opacity: 1;
-        
-      }
+
   
       .overlay-container {
         transform: translateX(-100%);

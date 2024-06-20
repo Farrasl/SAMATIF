@@ -1,19 +1,21 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
   define: {
-    '_VUE_PROD_HYDRATION_MISMATCH_DETAILS_': false // Atur flag ini ke true jika Anda ingin lebih banyak detail dalam produksi
+    '__VUE_PROD_HYDRATION_MISMATCH_DETAILS__': false,
+    '__VUE_OPTIONS_API__': true,  // Enable Vue 2 style options API
+    '__VUE_PROD_DEVTOOLS__': false  // Disable devtools in production
   },
   server: {
     proxy: {
       '/api': {
-        target: 'https://samatif.000webhostapp.com',
+        target: 'https://ghostwhite-hummingbird-779835.hostingersite.com/',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    }
-  }
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        secure: false,
+      },
+    },
+  },
 });
