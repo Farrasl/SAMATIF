@@ -1,47 +1,51 @@
 <template>
-    <div class="Header" :style="{ width: headerWidth, transition: 'width 0.5s' }">
-      <div class="user-header">
-        <p>Thn. Akademik 2023/2024 Genap</p>
-        <img src="../assets/gambar1.jpg" alt="foto" class="user-img">
-        <div class="dropdownheader" @click="toggleDropdown">
-          <button><i class='bx bxs-down-arrow'></i></button>
-          <div class="dropdownheader-content" v-if="isDropdownOpen">
-            <a href="#"><i class='bx bxs-user'></i> Ubah Password</a>
-            <a href="#"><i class='bx bxs-log-out'></i> Logout</a>
-          </div>
+  <div class="Header" :style="{ width: headerWidth, transition: 'width 0.5s' }">
+    <div class="user-header">
+      <p>Thn. Akademik 2023/2024 Genap</p>
+      <img src="../assets/gambar1.jpg" alt="foto" class="user-img">
+      <div class="dropdownheader" @click="toggleDropdown">
+        <button><i class='bx bxs-down-arrow'></i></button>
+        <div class="dropdownheader-content" v-if="isDropdownOpen">
+          <a href="#" @click.prevent="navigateTo('lupapassword')"><i class='bx bxs-user'></i> Ubah Password</a>
+          <a href="#" @click.prevent="navigateTo('Login')"><i class='bx bxs-log-out'></i> Logout</a>
         </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        sidebarActive: false,
-        sidebarWidth: '225px',
-        headerWidth: 'calc(100% - 225px)',
-        isDropdownOpen: false 
-      };
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      sidebarActive: false,
+      sidebarWidth: '225px',
+      headerWidth: 'calc(100% - 225px)',
+      isDropdownOpen: false
+    };
+  },
+  mounted() {
+    const btn = document.querySelector('#btn');
+    btn.addEventListener('click', this.toggleSidebar);
+  },
+  methods: {
+    toggleSidebar() {
+      this.sidebarActive = !this.sidebarActive;
+      this.updateHeaderWidth();
     },
-    mounted() {
-      const btn = document.querySelector('#btn');
-      btn.addEventListener('click', this.toggleSidebar);
+    updateHeaderWidth() {
+      this.headerWidth = this.sidebarActive ? 'calc(100% - 80px)' : 'calc(100% - 225px)';
     },
-    methods: {
-      toggleSidebar() {
-        this.sidebarActive = !this.sidebarActive;
-        this.updateHeaderWidth();
-      },
-      updateHeaderWidth() {
-        this.headerWidth = this.sidebarActive ? 'calc(100% - 80px)' : 'calc(100% - 225px)';
-      },
-      toggleDropdown() {
-        this.isDropdownOpen = !this.isDropdownOpen; 
-      }
+    toggleDropdown() {
+      this.isDropdownOpen = !this.isDropdownOpen;
+    },
+    navigateTo(routeName) {
+      this.$router.push({ name: routeName });
     }
-  };
-  </script>
+  }
+};
+</script>
+
 
 <style>
 .Header {

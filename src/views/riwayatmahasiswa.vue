@@ -1,87 +1,104 @@
 <template>
 	<div class="app">
-		<!-- Sidebar -->
-		<Sidebar />
-		<!-- Header -->
-		<Header />
-		<!-- Content -->
-		<router-view />
+	  <!-- Sidebar -->
+	  <Sidebar />
+	  <!-- Header -->
+	  <Header />
+	  <!-- Content -->
+	  <router-view />
 	</div>
-    <div class="Isi-Riwayat">
-    <div class="Header-Riwayat" >
-        <div class="riwayat">
-            <h3><i class="bx bxs-check-square"></i>Riwayat</h3>
-            <span> PA. Siti Ramadhani</span>
-        </div>
-    </div>
-    </div>
-
-    <table border="2" class="Tabel-Riwayat">
-		<tr>
-			<th>No</th>
-            <th>Tanggal</th>
-			<th>Surah</th>
-			<th>Kelancaran</th>
-			<th>Tajwid</th>
-            <th>Makhrajul Huruf</th>
-        </tr>
-		<tr v-for="(item, index) in setoranList" :key="index">
-      <td>{{ index + 1 }}</td>
-      <td>{{ item.tanggal }}</td>
-      <td>{{ item.nama_surah }}</td>
-      <td>{{ item.kelancaran }}</td>
-      <td>{{ item.tajwid }}</td>
-      <td>{{ item.makhrajul_huruf }}</td>
-    </tr>
-    </table>
-		
-    <div class="box">
- 		 <ul>
- 		 	<li v-for="skill in skills" :key="skill.lang">
- 		 		<div class="lang">{{skill.lang}}</div>
- 				<div class="bar">
- 					<div class="progress" :style="{ background: skill.color, width: skill.percent + '%' }"></div>
- 		 			<span class="percent">{{skill.percent}}%</span>
- 				</div>
- 		 	</li>
- 		 </ul>
- 	</div>
-
-</template>
-
-<script setup>
-import Sidebar from '../components/sidebarmahasiswa.vue';
-import Header from '../components/header.vue';
-import axios from 'axios';
-import { ref, onMounted } from 'vue';
-
-const setoranList = ref([]);
-const skills = ref([
-  { lang: "Kerja Praktek", percent: 0, color: "var(--dark)" },
-  { lang: "Seminar Kerja Praktek", percent: 0, color: "var(--dark)" },
-  { lang: "Judul Tugas Akhir", percent: 0, color: "var(--dark)" },
-  { lang: "Seminar Proposal", percent: 0, color: "var(--dark)" },
-  { lang: "Sidang Tugas Akhir", percent: 0, color: "var(--dark)" },
-]);
-
-onMounted(async () => {
-  try {
-    const setoranResponse = await axios.get('/api/setoran/by-nim.php?nim=122501');
-    setoranList.value = setoranResponse.data.setoran; 
-
-    const skillsResponse = await axios.get('/api/setoran/sudahbelum.php?nim=122501');
-    const { percentages } = skillsResponse.data;
-    percentages.forEach((item) => {
-      const index = skills.value.findIndex((skill) => skill.lang === item.lang);
-      if (index !== -1) {
-        skills.value[index].percent = item.percent;
-      }
-    });
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-});
-</script>
+	<div class="Isi-Riwayat">
+	  <div class="Header-Riwayat">
+		<div class="riwayat">
+		  <h3><i class="bx bxs-check-square"></i>Riwayat</h3>
+		  <span> PA. {{ namaDosen }}</span>
+		</div>
+	  </div>
+	</div>
+  
+	<table border="2" class="Tabel-Riwayat">
+	  <tr>
+		<th>No</th>
+		<th>Tanggal</th>
+		<th>Surah</th>
+		<th>Kelancaran</th>
+		<th>Tajwid</th>
+		<th>Makhrajul Huruf</th>
+	  </tr>
+	  <tr v-for="(item, index) in setoranList" :key="index">
+		<td>{{ index + 1 }}</td>
+		<td>{{ item.tanggal }}</td>
+		<td>{{ item.nama_surah }}</td>
+		<td>{{ item.kelancaran }}</td>
+		<td>{{ item.tajwid }}</td>
+		<td>{{ item.makhrajul_huruf }}</td>
+	  </tr>
+	</table>
+  
+	<div class="box">
+	  <ul>
+		<li v-for="skill in skills" :key="skill.lang">
+		  <div class="lang">{{ skill.lang }}</div>
+		  <div class="bar">
+			<div class="progress" :style="{ background: skill.color, width: skill.percent + '%' }"></div>
+			<span class="percent">{{ skill.percent }}%</span>
+		  </div>
+		</li>
+	  </ul>
+	</div>
+  </template>
+  
+  <script setup>
+  import Sidebar from '../components/sidebarmahasiswa.vue';
+  import Header from '../components/header.vue';
+  import axios from 'axios';
+  import { ref, onMounted } from 'vue';
+  
+  const setoranList = ref([]);
+  const skills = ref([
+	{ lang: "Kerja Praktek", percent: 0, color: "var(--dark)" },
+	{ lang: "Seminar Kerja Praktek", percent: 0, color: "var(--dark)" },
+	{ lang: "Judul Tugas Akhir", percent: 0, color: "var(--dark)" },
+	{ lang: "Seminar Proposal", percent: 0, color: "var(--dark)" },
+	{ lang: "Sidang Tugas Akhir", percent: 0, color: "var(--dark)" },
+  ]);
+  
+  const namaDosen = ref('');
+  
+  onMounted(async () => {
+	try {
+	  // Ambil nim dari localStorage
+	  const userData = localStorage.getItem('userData');
+	  const nim = userData ? JSON.parse(userData).nim : null;
+	  if (!nim) {
+		console.error('NIM not found in localStorage');
+		return;
+	  }
+  
+	  // Ambil nama dosen PA dari endpoint
+	  const dosenResponse = await axios.get(`/api/dosenpa/by-nim.php?nim=${nim}`);
+	  const dosenData = dosenResponse.data.mahasiswa[0];
+	  namaDosen.value = dosenData ? dosenData['Nama Dosen PA'] : 'Tidak ditemukan';
+  
+	  // Ambil data setoran
+	  const setoranResponse = await axios.get(`/api/setoran/by-nim.php?nim=${nim}`);
+	  setoranList.value = setoranResponse.data.setoran;
+  
+	  // Ambil data skills
+	  const skillsResponse = await axios.get(`/api/setoran/sudahbelum.php?nim=${nim}`);
+	  const { percentages } = skillsResponse.data;
+	  percentages.forEach((item) => {
+		const index = skills.value.findIndex((skill) => skill.lang === item.lang);
+		if (index !== -1) {
+		  skills.value[index].percent = item.percent;
+		}
+	  });
+	} catch (error) {
+	  console.error('Error fetching data:', error);
+	}
+  });
+  </script>
+  
 
 <style>
 :root {

@@ -11,7 +11,7 @@
 	  <div class="Header-Setoran">
 		<div class="setoran">
 		  <h3><i class="bx bxs-book"></i>Setoran</h3>
-		  <span>PA. Siti Ramadhani</span> 
+		  <span>PA. Siti Ramadhani</span>
 		</div>
 	  </div>
 	</div>
@@ -30,16 +30,16 @@
 	  <tr v-for="(item, index) in sortedSetoran" :key="index">
 		<td>{{ index + 1 }}</td>
 		<td>{{ item.nama_surah }}</td>
-		<td>{{ item.tanggal }}</td> 
-		<td>{{ item.persyaratan }}</td> 
+		<td>{{ item.tanggal }}</td>
+		<td>{{ item.persyaratan }}</td>
 		<td>{{ item.paraf_dosen }}</td>
 	  </tr>
 	  <tr v-for="(surah, idx) in surahBelumDisetorkan" :key="'surah-' + idx">
 		<td>{{ setoran.length + idx + 1 }}</td>
 		<td>{{ surah.nama_surah }}</td>
-		<td>-</td> 
+		<td>-</td>
 		<td>{{ surah.persyaratan }}</td>
-		<td>-</td> 
+		<td>-</td>
 	  </tr>
 	</table>
   </template>
@@ -84,19 +84,23 @@
   }
   
   async function fetchData() {
-	const nim = '122501'; // Ganti dengan NIM yang sesuai
+	const storedUserData = localStorage.getItem('userData');
+	const userData = storedUserData ? JSON.parse(storedUserData) : null;
+	const nim = userData ? userData.nim : null;
+  
+	if (!nim) {
+	  console.error('NIM not found in localStorage');
+	  return;
+	}
   
 	try {
-	  const responseNama = await fetch(`/api/setoran/sudahbelum.php?nim=122501`);
+	  const responseNama = await fetch(`/api/setoran/sudahbelum.php?nim=${nim}`);
 	  const dataNama = await responseNama.json();
-	  mahasiswa.value = dataNama.Nama; 
+	  mahasiswa.value = dataNama.Nama;
   
-	  const responseSetoran = await fetch(`/api/setoran/by-nim.php?nim=122501`);
+	  const responseSetoran = await fetch(`/api/setoran/by-nim.php?nim=${nim}`);
 	  const dataSetoran = await responseSetoran.json();
-	  setoran.value = dataSetoran.setoran.map(item => ({
-		...item,
-		persyaratan: getPersyaratan(item.nama_surah)
-	  })); 
+	  setoran.value = dataSetoran.setoran.map(item => ({...item, persyaratan: getPersyaratan(item.nama_surah)}));
   
 	  const semuaSurah = dataNama.percentages.reduce((acc, curr) => acc.concat(curr.surah_names.map(surah => ({ nama_surah: surah }))), []);
 	  
@@ -120,8 +124,7 @@
   onMounted(() => {
 	fetchData();
   });
-  </script>
-  
+  </script>  
 
 <style>
 :root {

@@ -60,7 +60,13 @@ const router = useRouter();
 
 const fetchData = async () => {
   try {
-    const response = await axios.get('/api/dosenpa/by-nip.php?nip=19981');
+    const nip = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')).nip : null;
+    if (!nip) {
+      console.error('NIP not found in localStorage');
+      return;
+    }
+
+    const response = await axios.get(`/api/dosenpa/by-nip.php?nip=${nip}`);
     const dosen = response.data.dosen[0];
     items.value = dosen.Mahasiswa.map(item => ({
       id: item.NIM,

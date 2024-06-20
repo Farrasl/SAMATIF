@@ -128,4 +128,35 @@
     transform: translateY(1px);
   }
   
+  .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.reset-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
   </style>

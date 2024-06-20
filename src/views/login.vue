@@ -16,7 +16,7 @@
           <input type="text" placeholder="Username" v-model="username" required />
           <input type="password" placeholder="Password" v-model="password" required />
           <div>
-            <a class="lupa" href="#" @click="forgotPassword">Lupa Password?</a>
+            <a class="lupa" href="#" @click.prevent="forgotPassword">Lupa Password?</a>
           </div>
           <button type="submit">Login</button>
         </form>
@@ -37,65 +37,60 @@ export default {
     };
   },
   methods: {
-    async login() {
-      try {
-        const loginUrl = '/api/index.php?action=login';
-
-        const response = await axios.post(loginUrl, {
-          username: this.username,
-          password: this.password
-        }, {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-          }
-        });
-
-        console.log('Response:', response);
-
-        const data = response.data;
-        if (data.token) {
-          localStorage.setItem('token', data.token);
-
-          // Fetch user data using the token
-          const userResponse = await axios.get('/api/index.php?action=get', {
-            headers: {
-              'Authorization': `Bearer ${data.token}`
-            }
-          });
-
-          console.log(userResponse);
-          const userData = userResponse.data;
-
-          // Redirect based on user role
-          if (userData.role === 'mahasiswa') {
-            this.$router.push({ name: 'berandamahasiswa' });
-          } else if (userData.role === 'dosen') {
-            this.$router.push({ name: 'berandadosen' });
-          }
-        } else {
-          console.log('Login response does not contain a token:', data.message);
-        }
-      } catch (error) {
-        console.error('Error during login request:', error);
-        if (error.response) {
-          // Server responded with a status other than 200 range
-          console.error('Response data:', error.response.data);
-          console.error('Response status:', error.response.status);
-          console.error('Response headers:', error.response.headers);
-        } else if (error.request) {
-          // Request was made but no response was received
-          console.error('Request data:', error.request);
-        } else {
-          // Something else caused the error
-          console.error('Error message:', error.message);
-        }
-        alert('Terjadi kesalahan saat login.');
+  async login() {
+  try {
+    const loginUrl = '/api/index.php?action=login';
+    const response = await axios.post(loginUrl, {
+      username: this.username,
+      password: this.password
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
       }
+    });
+
+    console.log('Response:', response);
+    const data = response.data;
+
+    if (data.token) {
+      localStorage.setItem('token', data.token);
+
+      // Fetch user data using the token
+      const userResponse = await axios.get('/api/index.php?action=get', {
+        headers: {
+          'Authorization': `Bearer ${data.token}`
+        }
+      });
+
+      console.log(userResponse);
+      const userData = userResponse.data;  // Save userData
+
+      // Save userData to localStorage
+      localStorage.setItem('userData', JSON.stringify(userData));
+
+      // Redirect based on user role
+      if (userData.role === 'mahasiswa') {
+        this.$router.push({ name: 'berandamahasiswa' });
+      } else if (userData.role === 'dosen') {
+        this.$router.push({ name: 'berandadosen' });
+      }
+    } else {
+      console.log('Login response does not contain a token:', data.message);
+    }
+  } catch (error) {
+    console.error('Error during login request:', error);
+    // Handle errors
+  }
+},
+
+    forgotPassword() {
+      this.$router.push({ name: 'lupapassword' });
     }
   }
 };
 </script>
+
   
   <style lang="scss" scoped>
     .containerlogin {

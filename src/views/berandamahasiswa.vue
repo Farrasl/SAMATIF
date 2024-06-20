@@ -1,51 +1,79 @@
 <template>
 	<div class="app">
-		<!-- Sidebar -->
-		<Sidebar/>
-		<!-- Header -->
-		<Header />
-		<!-- Content -->
-		<router-view />
+	  <!-- Sidebar -->
+	  <Sidebar />
+	  <!-- Header -->
+	  <Header />
+	  <!-- Content -->
+	  <router-view />
 	</div>
-	
-    <div class="Isi-Beranda" >
-    <div class="Header-Beranda" >
-        <div class="beranda">
-            <h3><i class="bx bxs-home"></i>Beranda</h3>
-            <span> PA. Siti Ramadhani</span>
-        </div>
-    </div>
-	<div>
-            <div class="Beranda-item1"> 
-				<i class='bx bxs-message-dots'></i>
-				<span>04 April 2024</span>
-            </div>
-            <div class="Beranda-item2">
-				<span>05 April 2024</span>
-				<i class='bx bxs-message-dots'></i>
-             </div>
-            <div class="Beranda-item3">
-				<i class='bx bxs-message-dots'></i>
-				<span>06 April 2024</span>
-            </div>
-        </div>  
-    </div>
-		
-</template>
-
-<script>
-import Sidebar from '../components/sidebarmahasiswa.vue';
-import Header from '../components/header.vue';
-
-export default {
-    components: {
-        Sidebar,
-        Header
-    },
-}
-</script>
-
-
+  
+	<div class="Isi-Beranda">
+	  <div class="Header-Beranda">
+		<div class="beranda">
+		  <h3><i class="bx bxs-home"></i>Beranda</h3>
+		  <span>PA. {{ namaDosen }}</span>
+		</div>
+	  </div>
+	</div>
+  
+	<div class="welcome">
+	  <h2 class="Selamatdatang">Selamat Datang <span class="namauser" style="font-style: italic;">{{ nama }}</span></h2>
+	</div>
+  </template>
+  
+  <script>
+  import Sidebar from '../components/sidebarmahasiswa.vue';
+  import Header from '../components/header.vue';
+  import axios from 'axios';
+  
+  export default {
+	components: {
+	  Sidebar,
+	  Header
+	},
+	data() {
+	  return {
+		nama: '', // Inisialisasi variabel nama
+		namaDosen: '' // Inisialisasi variabel nama dosen
+	  };
+	},
+	mounted() {
+	  this.getNamaUser(); // Panggil fungsi untuk mengambil nama pengguna saat komponen dimuat
+	  this.getNamaDosen(); // Panggil fungsi untuk mengambil nama dosen saat komponen dimuat
+	},
+	methods: {
+	  getNamaUser() {
+		// Ambil data dari localStorage
+		const userData = localStorage.getItem('userData');
+		if (userData) {
+		  const { nama } = JSON.parse(userData); // Ambil nilai nama dari data JSON
+		  this.nama = nama; // Tetapkan nilai nama ke variabel data
+		}
+	  },
+	  async getNamaDosen() {
+		try {
+		  // Ambil NIM dari localStorage
+		  const userData = localStorage.getItem('userData');
+		  if (userData) {
+			const { nim } = JSON.parse(userData);
+			// Panggil endpoint dengan NIM yang diambil dari localStorage
+			const response = await axios.get(`/api/dosenpa/by-nim.php?nim=${nim}`);
+			if (response.data.status === 'success') {
+			  this.namaDosen = response.data.mahasiswa[0]['Nama Dosen PA']; // Tetapkan nama dosen PA ke variabel data
+			} else {
+			  console.error('Gagal mengambil data dosen:', response.data.message);
+			}
+		  }
+		} catch (error) {
+		  console.error('Error fetching dosen data:', error);
+		}
+	  }
+	}
+  };
+  </script>
+  
+  
 <style>
 :root {
 	--primary: #4ade80;
@@ -90,17 +118,17 @@ button {
 }
 
 .Header-Beranda {
-background: #FFFFFF;
-position: absolute;
-top: 75px;
-right: 0px;
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 5px 25px 10px 2px;
-box-sizing: border-box;
-width: calc(100% - 225px); 
-border: 1px solid var(--dark);
+	background: #FFFFFF;
+	position: absolute;
+	top: 75px;
+	right: 0px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 5px 25px 10px 2px;
+	box-sizing: border-box;
+	width: calc(100% - 225px); 
+	border: 1px solid var(--dark);
 }
 
 .beranda {
@@ -108,7 +136,6 @@ border: 1px solid var(--dark);
     justify-content: space-between;
     align-items: center;
 }
-
 
 .beranda h3 {
     margin-right: 475px; 
@@ -118,84 +145,29 @@ border: 1px solid var(--dark);
     margin-left: 400px; 
 }
 
-.Beranda-item1 {
-	display: grid;
-    gap: 50px; 
-    padding: 15px;
-    margin-top: 150px;
+.welcome {
+	margin-top: 150px;
     margin-left: 250px; 
 	width: 500px;
     height: 250px;
-    border: 2px solid #fff; 
-    padding: 20px; 
-    color:var(--dark); 
-    text-align: center; 
-    border: 5px solid var(--primary-alt); 
 }
 
-.Beranda-item1 i {
-	font-size: 3rem;
-	margin-top: -25px;
-	margin-left: 490px;
-}
-
-.Beranda-item1 span {
-	margin-left: 300px;
-	margin-top: 125px;
-}
-
-.Beranda-item2 {
-	display: grid;
-    gap: 50px; 
-    padding: 15px;
-    margin-top: 30px;
-    margin-left: 850px; 
-	width: 500px;
-    height: 250px;
-    border: 2px solid #fff; 
-    padding: 20px; 
-    color:var(--dark); 
-    text-align: center; 
-    border: 5px solid var(--primary-alt); 
-}
-
-.Beranda-item2 i {
-	font-size: 3rem;
-	margin-top: -300px;
-	margin-left: -575px;
-}
-
-.Beranda-item2 span {
-	margin-left: 355px;
-	margin-top: 200px;
-}
-
-.Beranda-item3 {
-	display: grid;
-    gap: 50px; 
-    padding: 15px;
-    margin-top: 30px;
+.desc {
+    margin-top: 10px;
     margin-left: 250px;
-	margin-bottom: 50px; 
-	width: 500px;
-    height: 250px;
-    border: 2px solid #fff; 
-    padding: 20px; 
-    color:var(--dark); 
-    text-align: center; 
-    border: 5px solid var(--primary-alt); 
+    max-width: 700px;
+    color: var(--dark);
+    font-size: 1.1rem;
+    line-height: 1.6;
 }
 
-.Beranda-item3 i {
-	font-size: 3rem;
-	margin-top: -25px;
-	margin-left: 490px;
-}
-
-.Beranda-item3 span {
-	margin-left: 300px;
-	margin-top: 125px;
-}
-
-
+.Selamatdatang {
+    font-size: 2rem;
+    text-align: center;
+    color: var(--dark); 
+  }
+  
+.namauser {
+    color: var(--primary-alt);
+  }
 </style>

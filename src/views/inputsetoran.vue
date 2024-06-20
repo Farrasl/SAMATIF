@@ -135,9 +135,16 @@ const selectSurah = (surah) => {
 
 const simpanData = async () => {
   try {
+    // Ambil nip dari localStorage
+    const nip = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')).nip : null;
+    if (!nip) {
+      console.error('NIP not found in localStorage');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('nim', nim.value);
-    formData.append('nip', '19981'); // Add NIP value here if needed
+    formData.append('nip', nip); // Gunakan nip dari localStorage
     formData.append('id_surah', selectedSurahId.value);
     formData.append('tanggal', tanggal.value);
     formData.append('kelancaran', kelancaran.value);
@@ -157,6 +164,7 @@ const simpanData = async () => {
   }
 };
 </script>
+
 
 <style>
 :root {

@@ -6,13 +6,14 @@
 			<i class="bx bx-menu" id="btn" @click="MenuSidebar"></i>
 		</div>
 		<div class="user">
-            <img src="../assets/gambar1.jpg" alt="foto" class="user-img">
-			<div>
-				<p class="bold">Farras Lathief</p>
-				<p>12250111328</p>
-				<p>Semester 4</p>
-			</div>
-		</div>
+    <img src="../assets/gambar1.jpg" alt="foto" class="user-img">
+    <div>
+        <p class="bold">{{ userData.nama }}</p>
+        <p>{{ userData.nim }}</p>
+        <p>Semester {{ userData.semester }}</p>
+    </div>
+</div>
+
 		<ul>
 			<li>
 				<router-link to="/Beranda" class="button">
@@ -49,15 +50,26 @@
 
 <script>
 export default {
-    methods: {
-        MenuSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            sidebar.classList.toggle('active');
-        }
+  data() {
+    return {
+      userData: {}  // Initialize userData
+    };
+  },
+  mounted() {
+    // Retrieve userData from localStorage or Vuex
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    if (userData) {
+      this.userData = userData;
     }
+  },
+  methods: {
+    MenuSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('active');
+    }
+  }
 }
 </script>
-
 
 <style>
 * {

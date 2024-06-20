@@ -13,35 +13,40 @@
             <h3><i class="bx bxs-home"></i>Beranda</h3>
         </div>
     </div>
-	<div>
-            <div class="Beranda-item1"> 
-				<i class='bx bxs-message-dots'></i>
-				<span>04 April 2024</span>
-            </div>
-            <div class="Beranda-item2">
-				<span>05 April 2024</span>
-				<i class='bx bxs-message-dots'></i>
-             </div>
-            <div class="Beranda-item3">
-				<i class='bx bxs-message-dots'></i>
-				<span>06 April 2024</span>
-            </div>
-        </div>  
     </div>
-		
+	<div class="welcome">
+		<h2 class="Selamatdatang">Selamat Datang <span class="namauser" style="font-style: italic;">{{ nama }}</span></h2>
+	</div>
 </template>
 
 <script>
-import Sidebar from '../components/sidebardosen.vue';
-import Header from '../components/header.vue';
-
-export default {
-    components: {
-        Sidebar,
-        Header
-    }
-}
-
+ import Sidebar from '../components/sidebardosen.vue';
+  import Header from '../components/header.vue';
+  
+  export default {
+	components: {
+	  Sidebar,
+	  Header
+	},
+	data() {
+	  return {
+		nama: '' // Inisialisasi variabel nama
+	  };
+	},
+	mounted() {
+	  this.getNamaUser(); // Panggil fungsi untuk mengambil nama pengguna saat komponen dimuat
+	},
+	methods: {
+	  getNamaUser() {
+		// Ambil data dari localStorage
+		const userData = localStorage.getItem('userData');
+		if (userData) {
+		  const { nama } = JSON.parse(userData); // Ambil nilai nama dari data JSON
+		  this.nama = nama; // Tetapkan nilai nama ke variabel data
+		}
+	  }
+	}
+  };
 </script>
 
 
