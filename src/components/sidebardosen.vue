@@ -6,7 +6,7 @@
 			<i class="bx bx-menu" id="btn" @click="MenuSidebar"></i>
 		</div>
 		<div class="user">
-            <img src="../assets/gambar1.jpg" alt="foto" class="user-img">
+            <img src="../assets/gambar1.png" alt="foto" class="user-img">
 			<div>
 				<p class="bold">{{ userData.nama }}</p>
 				<p>{{ userData.nip }}</p>

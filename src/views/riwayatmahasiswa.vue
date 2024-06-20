@@ -151,6 +151,7 @@ right: 0px;
 display: flex;
 flex-direction: column;
 align-items: center;
+margin-top: -10px;
 padding: 5px 25px 10px 2px;
 box-sizing: border-box;
 width: calc(100% - 225px); 

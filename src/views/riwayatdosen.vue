@@ -73,7 +73,7 @@ const fetchData = async () => {
       name: item.Nama,
       nim: item.NIM,
       semester: item.Semester,
-      image: 'src/assets/gambar1.jpg'
+      image: 'src/assets/gambar1.png'
     }));
   } catch (error) {
     console.error('Error fetching data', error);

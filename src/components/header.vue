@@ -2,7 +2,7 @@
   <div class="Header" :style="{ width: headerWidth, transition: 'width 0.5s' }">
     <div class="user-header">
       <p>Thn. Akademik 2023/2024 Genap</p>
-      <img src="../assets/gambar1.jpg" alt="foto" class="user-img">
+      <img src="../assets/gambar1.png" alt="foto" class="user-img">
       <div class="dropdownheader" @click="toggleDropdown">
         <button><i class='bx bxs-down-arrow'></i></button>
         <div class="dropdownheader-content" v-if="isDropdownOpen">
