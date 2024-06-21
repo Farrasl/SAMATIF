@@ -18,7 +18,7 @@
 	</div>
   
 	<div class="welcome">
-	  <h2 class="Selamatdatang">Selamat Datang <span class="namauser" style="font-style: italic;">{{ nama }}</span></h2>
+	  <h2 class="Selamatdatang">Assalamualaikum <span class="namauser" style="font-style: italic;">{{ nama }}</span></h2>
 	</div>
   </template>
   
