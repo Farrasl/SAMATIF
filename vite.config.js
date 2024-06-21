@@ -11,7 +11,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://ghostwhite-hummingbird-779835.hostingersite.com/',
+        target: 'https://samatif-ml.preview-domain.com/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
         secure: false,

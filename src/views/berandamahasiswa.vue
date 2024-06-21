@@ -74,62 +74,64 @@
   </script>
   
   
-<style>
+  <style>
 :root {
-	--primary: #4ade80;
-	--primary-alt: #22c55e;
-	--grey: #64748b;
-	--dark: #1e293b;
-	--dark-alt: #334155;
-	--light: #f1f5f9;
-	--sidebar-width: 300px;
+    --primary: #4ade80;
+    --primary-alt: #22c55e;
+    --grey: #64748b;
+    --dark: #1e293b;
+    --dark-alt: #334155;
+    --light: #f1f5f9;
+    --sidebar-width: 300px;
 }
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: 'Fira sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Fira sans', sans-serif;
 }
 
 body {
-	background: var(--light);
+    background-image: url('../assets/uinsuska.png'); /* Perbaiki path jika perlu */
+    background-color: var(--light)\\\; 
 }
 
 button {
-	cursor: pointer;
-	appearance: none;
-	border: none;
-	outline: none;
-	background: none;
+    cursor: pointer;
+    appearance: none;
+    border: none;
+    outline: none;
+    background: none;
 }
 
 .app {
-	display: flex;
+    display: flex;
+    flex-direction: column; 
+}
 
-	main {
-		flex: 1 1 0;
-		padding: 2rem;
+.main {
+    flex: 1; 
+    padding: 2rem;
 
-		@media (max-width: 1024px) {
-			padding-left: 6rem;
-		}
-	}
+    @media (max-width: 1024px) {
+        padding-left: 6rem;
+    }
 }
 
 .Header-Beranda {
-	background: #FFFFFF;
-	position: absolute;
-	top: 75px;
-	right: 0px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-top: -10px;
-	padding: 5px 25px 10px 2px;
-	box-sizing: border-box;
-	width: calc(100% - 225px); 
-	border: 1px solid var(--dark);
+    background: #FFFFFF;
+    position: absolute;
+    top: 75px;
+    right: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -10px;
+    padding: 5px 25px 10px 2px;
+    box-sizing: border-box;
+    width: calc(100% - 225px); 
+    border: 1px solid var(--dark);
 }
 
 .beranda {
@@ -147,9 +149,9 @@ button {
 }
 
 .welcome {
-	margin-top: 150px;
+    margin-top: 150px;
     margin-left: 250px; 
-	width: 500px;
+    width: 500px;
     height: 250px;
 }
 
@@ -166,9 +168,9 @@ button {
     font-size: 2rem;
     text-align: center;
     color: var(--dark); 
-  }
-  
+}
+
 .namauser {
     color: var(--primary-alt);
-  }
+}
 </style>
