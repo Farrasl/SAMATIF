@@ -39,7 +39,7 @@ export default {
   methods: {
   async login() {
   try {
-    const loginUrl = '/api/index.php?action=login';
+    const loginUrl = '/api/login.php?action=login';
     const response = await axios.post(loginUrl, {
       username: this.username,
       password: this.password
@@ -57,7 +57,7 @@ export default {
       localStorage.setItem('token', data.token);
 
       // Fetch user data using the token
-      const userResponse = await axios.get('/api/index.php?action=get', {
+      const userResponse = await axios.get('/api/login.php?action=get', {
         headers: {
           'Authorization': `Bearer ${data.token}`
         }
