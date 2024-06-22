@@ -39,7 +39,7 @@
     methods: {
     async login() {
     try {
-      const loginUrl = '/api/login.php?action=login';
+      const loginUrl = 'https://samatif-ml.preview-domain.com/login.php?action=login';
       const response = await axios.post(loginUrl, {
         username: this.username,
         password: this.password
