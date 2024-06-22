@@ -39,7 +39,7 @@
     methods: {
     async login() {
     try {
-      const loginUrl = 'https://samatif-ml.preview-domain.com/login.php?action=login';
+      const loginUrl = 'https://samatif.xyz//login.php?action=login';
       const response = await axios.post(loginUrl, {
         username: this.username,
         password: this.password
@@ -48,7 +48,6 @@
           "Content-Type": "application/json",
           Accept: "application/json"
         }
-        http2: false // Nonaktifkan HTTP/2
       });
 
       console.log('Response:', response);
@@ -58,7 +57,7 @@
         localStorage.setItem('token', data.token);
 
         // Fetch user data using the token
-        const userResponse = await axios.get('https://samatif-ml.preview-domain.com/login.php?action=get', {
+        const userResponse = await axios.get('https://samatif.xyz//login.php?action=get', {
           headers: {
             'Authorization': `Bearer ${data.token}`
           }

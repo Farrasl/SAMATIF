@@ -18,7 +18,7 @@
     </div>
 
     <button class="download" @click="downloadTable">
-        <span> Download</span>
+        <span>Download</span>
         <i class='bx bxs-download'></i>
     </button>
 
@@ -105,15 +105,16 @@ async function fetchData() {
         };
 
         // Fetch PA's name
-        const responseDosen = await axios.get(`https://samatif-ml.preview-domain.com/dosenpa/by-nim.php?nim=${nim}`, config);
-        namaDosen.value = responseDosen.data.nama_dosen;
+        const responseDosen = await axios.get(`https://samatif.xyz/dosenpa/by-nim.php?nim=${nim}`, config);
+        const dosenData = responseDosen.data.mahasiswa[0];
+        namaDosen.value = dosenData ? dosenData['Nama Dosen PA'] : 'Tidak ditemukan';
 
         // Fetch other data as before
-        const responseNama = await axios.get(`https://samatif-ml.preview-domain.com/setoran/sudahbelum.php?nim=${nim}`, config);
+        const responseNama = await axios.get(`https://samatif.xyz/setoran/sudahbelum.php?nim=${nim}`, config);
         const dataNama = responseNama.data;
         mahasiswa.value = dataNama.Nama;
 
-        const responseSetoran = await axios.get(`https://samatif-ml.preview-domain.com/setoran/by-nim.php?nim=${nim}`, config);
+        const responseSetoran = await axios.get(`https://samatif.xyz/setoran/by-nim.php?nim=${nim}`, config);
         const dataSetoran = responseSetoran.data.setoran;
         setoran.value = dataSetoran.map(item => ({ ...item, persyaratan: getPersyaratan(item.nama_surah) }));
 
@@ -131,7 +132,6 @@ async function fetchData() {
 }
 
 const combinedSurahs = computed(() => {
-    // Combine setoran and surahBelumDisetorkan, maintaining the original order
     const combined = semuaSurah.map(nama_surah => {
         const submittedSurah = setoran.value.find(surah => surah.nama_surah === nama_surah);
         if (submittedSurah) {
@@ -146,7 +146,7 @@ const combinedSurahs = computed(() => {
 
 const downloadTable = async () => {
     try {
-        await nextTick(); // pastikan elemen telah di-render sebelum mengakses ref
+        await nextTick(); // Ensure elements are rendered before accessing ref
         const table = tableRef.value;
         if (!table) {
             console.error('Error: Table reference is not set.');

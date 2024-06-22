@@ -78,7 +78,7 @@ const fetchData = async () => {
       }
     };
 
-    const response = await axios.get(`https://samatif-ml.preview-domain.com/dosenpa/by-nip.php?nip=${nip}`, config);
+    const response = await axios.get(`https://samatif.xyz/dosenpa/by-nip.php?nip=${nip}`, config);
 
     // Pastikan respons memiliki properti dosen
     if (!response.data.dosen || response.data.dosen.length === 0) {

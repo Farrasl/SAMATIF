@@ -66,57 +66,63 @@
   const namaDosen = ref('');
   
   onMounted(async () => {
-	try {
-	  const userData = localStorage.getItem('userData');
-	  const nim = userData ? JSON.parse(userData).nim : null;
-	  if (!nim) {
-		console.error('NIM not found in localStorage');
-		return;
-	  }
-  
-	  const setoranResponse = await axios.get(`https://samatif-ml.preview-domain.com/setoran/by-nim.php?nim=${nim}`);
-	  setoranList.value = setoranResponse.data.setoran;
-  
-	  const token = localStorage.getItem('token');
-	  if (token) {
-		const dosenResponse = await axios.get(`https://samatif-ml.preview-domain.com/dosenpa/by-nim.php?nim=${nim}`, {
-		  headers: {
-			'Authorization': `Bearer ${token}`
-		  }
-		});
-  
-		if (dosenResponse.data.status === 'error') {
-		  console.error('Error fetching PA data:', dosenResponse.data.message);
-		  namaDosen.value = 'Tidak ditemukan';
-		} else {
-		  const dosenData = dosenResponse.data.mahasiswa[0];
-		  namaDosen.value = dosenData ? dosenData['Nama Dosen PA'] : 'Tidak ditemukan';
-		}
-  
-		const skillsResponse = await axios.get(`https://samatif-ml.preview-domain.com/setoran/sudahbelum.php?nim=${nim}`, {
-		  headers: {
-			'Authorization': `Bearer ${token}`
-		  }
-		});
-  
-		if (skillsResponse.data.status === 'error') {
-		  console.error('Error fetching skills data:', skillsResponse.data.message);
-		} else {
-		  const { percentages } = skillsResponse.data;
-		  percentages.forEach((item) => {
-			const index = skills.value.findIndex((skill) => skill.lang === item.lang);
-			if (index !== -1) {
-			  skills.value[index].percent = item.percent;
-			}
-		  });
-		}
-	  } else {
-		console.error('User not authenticated');
-	  }
-	} catch (error) {
-	  console.error('Error fetching data:', error);
-	}
-  });
+    try {
+        const userData = localStorage.getItem('userData');
+        const nim = userData ? JSON.parse(userData).nim : null;
+        if (!nim) {
+            console.error('NIM not found in localStorage');
+            return;
+        }
+
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('User not authenticated');
+            return;
+        }
+
+        // Fetch Setoran
+        const setoranResponse = await axios.get(`https://samatif.xyz/setoran/by-nim.php?nim=${nim}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        setoranList.value = setoranResponse.data.setoran;
+
+        // Fetch Dosen PA
+        const dosenResponse = await axios.get(`https://samatif.xyz/dosenpa/by-nim.php?nim=${nim}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (dosenResponse.data.status === 'error') {
+            console.error('Error fetching PA data:', dosenResponse.data.message);
+            namaDosen.value = 'Tidak ditemukan';
+        } else {
+            const dosenData = dosenResponse.data.mahasiswa[0];
+            namaDosen.value = dosenData ? dosenData['Nama Dosen PA'] : 'Tidak ditemukan';
+        }
+
+        // Fetch Skills
+        const skillsResponse = await axios.get(`https://samatif.xyz/setoran/sudahbelum.php?nim=${nim}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (skillsResponse.data.status === 'error') {
+            console.error('Error fetching skills data:', skillsResponse.data.message);
+        } else {
+            const { percentages } = skillsResponse.data;
+            percentages.forEach((item) => {
+                const index = skills.value.findIndex((skill) => skill.lang === item.lang);
+                if (index !== -1) {
+                    skills.value[index].percent = item.percent;
+                }
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+});
   </script>
   
 <style>
