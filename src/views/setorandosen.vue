@@ -35,7 +35,7 @@
       <div class="recycler-view">
         <div class="list-item" v-for="item in items" :key="item.id" @click="handleItemClick(item)">
           <div class="list-item-content">
-            <img :src="../assets/gambar1.png" alt="Foto Mahasiswa" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+            <img :src="item.image" alt="Foto Mahasiswa" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
             <div class="item-info">
               <p>Nama: {{ item.name }}</p>
               <p>NIM: {{ item.nim }}</p>
