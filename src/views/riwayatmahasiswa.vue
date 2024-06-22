@@ -67,7 +67,6 @@
   
   onMounted(async () => {
 	try {
-	  // Ambil nim dari localStorage
 	  const userData = localStorage.getItem('userData');
 	  const nim = userData ? JSON.parse(userData).nim : null;
 	  if (!nim) {
@@ -75,31 +74,52 @@
 		return;
 	  }
   
-	  // Ambil nama dosen PA dari endpoint
-	  const dosenResponse = await axios.get(`/api/dosenpa/by-nim.php?nim=${nim}`);
-	  const dosenData = dosenResponse.data.mahasiswa[0];
-	  namaDosen.value = dosenData ? dosenData['Nama Dosen PA'] : 'Tidak ditemukan';
-  
-	  // Ambil data setoran
 	  const setoranResponse = await axios.get(`/api/setoran/by-nim.php?nim=${nim}`);
 	  setoranList.value = setoranResponse.data.setoran;
   
-	  // Ambil data skills
-	  const skillsResponse = await axios.get(`/api/setoran/sudahbelum.php?nim=${nim}`);
-	  const { percentages } = skillsResponse.data;
-	  percentages.forEach((item) => {
-		const index = skills.value.findIndex((skill) => skill.lang === item.lang);
-		if (index !== -1) {
-		  skills.value[index].percent = item.percent;
+	  const token = localStorage.getItem('token');
+	  if (token) {
+		const dosenResponse = await axios.get(`/api/dosenpa/by-nim.php?nim=${nim}`, {
+		  headers: {
+			'Authorization': `Bearer ${token}`
+		  }
+		});
+  
+		if (dosenResponse.data.status === 'error') {
+		  console.error('Error fetching PA data:', dosenResponse.data.message);
+		  namaDosen.value = 'Tidak ditemukan';
+		} else {
+		  const dosenData = dosenResponse.data.mahasiswa[0];
+		  namaDosen.value = dosenData ? dosenData['Nama Dosen PA'] : 'Tidak ditemukan';
 		}
-	  });
+  
+		const skillsResponse = await axios.get(`/api/setoran/sudahbelum.php?nim=${nim}`, {
+		  headers: {
+			'Authorization': `Bearer ${token}`
+		  }
+		});
+  
+		if (skillsResponse.data.status === 'error') {
+		  console.error('Error fetching skills data:', skillsResponse.data.message);
+		} else {
+		  const { percentages } = skillsResponse.data;
+		  percentages.forEach((item) => {
+			const index = skills.value.findIndex((skill) => skill.lang === item.lang);
+			if (index !== -1) {
+			  skills.value[index].percent = item.percent;
+			}
+		  });
+		}
+	  } else {
+		console.error('User not authenticated');
+	  }
 	} catch (error) {
 	  console.error('Error fetching data:', error);
 	}
   });
   </script>
   
-
+  
 <style>
 :root {
 	--primary: #4ade80;

@@ -60,13 +60,32 @@ const router = useRouter();
 
 const fetchData = async () => {
   try {
-    const nip = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')).nip : null;
-    if (!nip) {
-      console.error('NIP not found in localStorage');
+    const storedUserData = localStorage.getItem('userData');
+    const userData = storedUserData ? JSON.parse(storedUserData) : null;
+    const token = localStorage.getItem('token');
+
+    if (!userData || !token) {
+      console.error('User data or token not found in localStorage');
       return;
     }
 
-    const response = await axios.get(`/api/dosenpa/by-nip.php?nip=${nip}`);
+    const nip = userData.nip;
+
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const response = await axios.get(`/api/dosenpa/by-nip.php?nip=${nip}`, config);
+
+    // Pastikan respons memiliki properti dosen
+    if (!response.data.dosen || response.data.dosen.length === 0) {
+      console.error('Data dosen tidak ditemukan atau respons tidak sesuai:', response.data);
+      return;
+    }
+
     const dosen = response.data.dosen[0];
     items.value = dosen.Mahasiswa.map(item => ({
       id: item.NIM,
@@ -79,6 +98,7 @@ const fetchData = async () => {
     console.error('Error fetching data', error);
   }
 };
+
 
 const handleItemClick = (item) => {
   router.push({ name: 'riwayatmahasiswadosen', params: { id: item.id, name: item.name, nim: item.nim } });

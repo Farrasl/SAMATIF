@@ -19,6 +19,15 @@
   
 	<div class="welcome">
 	  <h2 class="Selamatdatang">Assalamualaikum <span class="namauser" style="font-style: italic;">{{ nama }}</span></h2>
+	  <p>
+		Aplikasi Setoran Hafalan Mahasiswa adalah platform yang dirancang untuk memudahkan mahasiswa dalam mengatur dan melacak progres hafalan mereka. Dalam konteks ini, hafalan merujuk pada ayat-ayat Al-Qur'an, teks-teks klasik, atau materi akademis lain yang perlu dipelajari dan dihafal secara berkala.
+	  </p>
+	  <p>
+		Dengan aplikasi ini, mahasiswa dapat dengan mudah merekam setoran hafalan mereka, mendapatkan umpan balik dari dosen atau mentor, serta memantau perkembangan mereka dari waktu ke waktu. Fitur-fitur yang intuitif dan user-friendly memastikan pengalaman pengguna yang menyenangkan dan efektif.
+	  </p>
+	  <p>
+		Selamat menggunakan Aplikasi Setoran Hafalan Mahasiswa! Semoga alat ini membantu Anda dalam mencapai tujuan akademis dan spiritual Anda dengan lebih teratur dan sistematis. Teruslah berusaha dan jangan pernah berhenti belajar.
+	  </p>
 	</div>
   </template>
   
@@ -57,8 +66,14 @@
 		  const userData = localStorage.getItem('userData');
 		  if (userData) {
 			const { nim } = JSON.parse(userData);
-			// Panggil endpoint dengan NIM yang diambil dari localStorage
-			const response = await axios.get(`/api/dosenpa/by-nim.php?nim=${nim}`);
+			// Ambil token dari localStorage
+			const token = localStorage.getItem('token');
+			// Panggil endpoint dengan NIM yang diambil dari localStorage dan sertakan header otorisasi
+			const response = await axios.get(`/api/dosenpa/by-nim.php?nim=${nim}`, {
+			  headers: {
+				Authorization: `Bearer ${token}` // Sertakan token dalam header otorisasi
+			  }
+			});
 			if (response.data.status === 'success') {
 			  this.namaDosen = response.data.mahasiswa[0]['Nama Dosen PA']; // Tetapkan nama dosen PA ke variabel data
 			} else {
@@ -72,7 +87,6 @@
 	}
   };
   </script>
-  
   
   <style>
 :root {
@@ -93,7 +107,6 @@
 }
 
 body {
-    background-image: url('../assets/uinsuska.png'); /* Perbaiki path jika perlu */
     background-color: var(--light)\\\; 
 }
 

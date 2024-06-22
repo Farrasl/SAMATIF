@@ -110,10 +110,24 @@ const makhrajulHuruf = ref('Pilih Makhrajul Huruf');
 
 onMounted(async () => {
   try {
-    const response = await axios.get('/api/surah/get-all.php');
+    // Ambil token dari localStorage
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token not found in localStorage');
+      return;
+    }
+
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    };
+
+    const response = await axios.get('/api/surah/get-all.php', config);
     surahList.value = response.data;
   } catch (error) {
     console.error('Error fetching surah data:', error);
+    alert('Terjadi kesalahan saat mengambil data surah.');
   }
 
   const dropdowns = document.querySelectorAll('.dropdown');
@@ -128,6 +142,7 @@ onMounted(async () => {
   });
 });
 
+
 const selectSurah = (surah) => {
   selectedSurah.value = surah.name;
   selectedSurahId.value = surah.id;
@@ -135,23 +150,33 @@ const selectSurah = (surah) => {
 
 const simpanData = async () => {
   try {
-    // Ambil nip dari localStorage
-    const nip = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')).nip : null;
-    if (!nip) {
-      console.error('NIP not found in localStorage');
+    // Ambil nip dan token dari localStorage
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const token = localStorage.getItem('token');
+    if (!userData || !token) {
+      console.error('User data or token not found in localStorage');
       return;
     }
 
+    const { nip } = userData;
+
     const formData = new FormData();
     formData.append('nim', nim.value);
-    formData.append('nip', nip); // Gunakan nip dari localStorage
+    formData.append('nip', nip);
     formData.append('id_surah', selectedSurahId.value);
     formData.append('tanggal', tanggal.value);
     formData.append('kelancaran', kelancaran.value);
     formData.append('tajwid', tajwid.value);
     formData.append('makhrajul_huruf', makhrajulHuruf.value);
 
-    const response = await axios.post('/api/setoran/insert.php', formData);
+    const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    };
+
+    const response = await axios.post('/api/setoran/insert.php', formData, config);
 
     if (response.data.status === 'success') {
       alert('Data setoran berhasil ditambahkan.');
@@ -164,7 +189,6 @@ const simpanData = async () => {
   }
 };
 </script>
-
 
 <style>
 :root {

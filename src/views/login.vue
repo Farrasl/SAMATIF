@@ -1,97 +1,96 @@
-<template>
-  <article>
-    <div class="containerlogin" :class="{'sign-in-active' : signIn}">
-      <div class="overlay-container">
-        <div class="overlay">
-          <div class="overlay-right">
-            <img src="../assets/uinsuska.png" alt="UIN Suska" class="logo">
-            <h2>Selamat Datang Silahkan Login</h2>
+  <template>
+    <article>
+      <div class="containerlogin" :class="{'sign-in-active' : signIn}">
+        <div class="overlay-container">
+          <div class="overlay">
+            <div class="overlay-right">
+              <img src="../assets/uinsuska.png" alt="UIN Suska" class="logo">
+              <h2>Selamat Datang Silahkan Login</h2>
+            </div>
           </div>
         </div>
+        <div id="a">
+          <form class="sign-in" @submit.prevent="login">
+            <h2>Login</h2>
+            <div>Masukkan Akun Anda</div>
+            <input type="text" placeholder="Username" v-model="username" required />
+            <input type="password" placeholder="Password" v-model="password" required />
+            <div>
+              <a class="lupa" href="#" @click.prevent="forgotPassword">Lupa Password?</a>
+            </div>
+            <button type="submit">Login</button>
+          </form>
+        </div>
       </div>
-      <div id="a">
-        <form class="sign-in" @submit.prevent="login">
-          <h2>Login</h2>
-          <div>Masukkan Akun Anda</div>
-          <input type="text" placeholder="Username" v-model="username" required />
-          <input type="password" placeholder="Password" v-model="password" required />
-          <div>
-            <a class="lupa" href="#" @click.prevent="forgotPassword">Lupa Password?</a>
-          </div>
-          <button type="submit">Login</button>
-        </form>
-      </div>
-    </div>
-  </article>
-</template>
+    </article>
+  </template>
 
-<script>
-import axios from 'axios';
+  <script>
+  import axios from 'axios';
 
-export default {
-  data() {
-    return {
-      username: '',
-      password: '',
-      signIn: false
-    };
-  },
-  methods: {
-  async login() {
-  try {
-    const loginUrl = '/api/login.php?action=login';
-    const response = await axios.post(loginUrl, {
-      username: this.username,
-      password: this.password
-    }, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      }
-    });
-
-    console.log('Response:', response);
-    const data = response.data;
-
-    if (data.token) {
-      localStorage.setItem('token', data.token);
-
-      // Fetch user data using the token
-      const userResponse = await axios.get('/api/login.php?action=get', {
+  export default {
+    data() {
+      return {
+        username: '',
+        password: '',
+        signIn: false
+      };
+    },
+    methods: {
+    async login() {
+    try {
+      const loginUrl = '/api/login.php?action=login';
+      const response = await axios.post(loginUrl, {
+        username: this.username,
+        password: this.password
+      }, {
         headers: {
-          'Authorization': `Bearer ${data.token}`
+          "Content-Type": "application/json",
+          Accept: "application/json"
         }
       });
 
-      console.log(userResponse);
-      const userData = userResponse.data;  // Save userData
+      console.log('Response:', response);
+      const data = response.data;
 
-      // Save userData to localStorage
-      localStorage.setItem('userData', JSON.stringify(userData));
+      if (data.token) {
+        localStorage.setItem('token', data.token);
 
-      // Redirect based on user role
-      if (userData.role === 'mahasiswa') {
-        this.$router.push({ name: 'berandamahasiswa' });
-      } else if (userData.role === 'dosen') {
-        this.$router.push({ name: 'berandadosen' });
+        // Fetch user data using the token
+        const userResponse = await axios.get('/api/login.php?action=get', {
+          headers: {
+            'Authorization': `Bearer ${data.token}`
+          }
+        });
+
+        console.log(userResponse);
+        const userData = userResponse.data;  // Save userData
+
+        // Save userData to localStorage
+        localStorage.setItem('userData', JSON.stringify(userData));
+
+        // Redirect based on user role
+        if (userData.role === 'mahasiswa') {
+          this.$router.push({ name: 'berandamahasiswa' });
+        } else if (userData.role === 'dosen') {
+          this.$router.push({ name: 'berandadosen' });
+        }
+      } else {
+        console.log('Login response does not contain a token:', data.message);
       }
-    } else {
-      console.log('Login response does not contain a token:', data.message);
+    } catch (error) {
+      console.error('Error during login request:', error);
+      // Handle errors
     }
-  } catch (error) {
-    console.error('Error during login request:', error);
-    // Handle errors
-  }
-},
+  },
 
-    forgotPassword() {
-      this.$router.push({ name: 'lupapassword' });
+      forgotPassword() {
+        this.$router.push({ name: 'lupapassword' });
+      }
     }
-  }
-};
-</script>
+  };
+  </script>
 
-  
   <style lang="scss" scoped>
     .containerlogin {
 

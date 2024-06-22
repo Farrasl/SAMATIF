@@ -11,6 +11,8 @@
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "bootstrap-vue": "^2.23.1",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "qs": "^6.12.1",
     "react-bootstrap": "^2.10.2",
     "vue": "^3.4.25",

@@ -80,10 +80,25 @@
   
   const fetchData = async () => {
 	try {
-	  const setoranResponse = await axios.get(`/api/setoran/by-nim.php?nim=${nim.value}`);
-	  setoranList.value = setoranResponse.data.setoran; 
+	  // Ambil token dari localStorage
+	  const token = localStorage.getItem('token');
+	  if (!token) {
+		console.error('Token not found in localStorage');
+		return;
+	  }
   
-	  const skillsResponse = await axios.get(`/api/setoran/sudahbelum.php?nim=${nim.value}`);
+	  const config = {
+		headers: {
+		  'Authorization': `Bearer ${token}`
+		}
+	  };
+  
+	  // Ambil data setoran
+	  const setoranResponse = await axios.get(`/api/setoran/by-nim.php?nim=${nim.value}`, config);
+	  setoranList.value = setoranResponse.data.setoran;
+  
+	  // Ambil data persentase skills
+	  const skillsResponse = await axios.get(`/api/setoran/sudahbelum.php?nim=${nim.value}`, config);
 	  const { percentages } = skillsResponse.data;
   
 	  if (percentages) {
@@ -115,11 +130,24 @@
 	  const formData = new FormData();
 	  formData.append('id_setoran', id_setoran);
   
-	  const response = await axios.post('/api/setoran/delete.php', formData);
+	  const token = localStorage.getItem('token');
+	  if (!token) {
+		console.error('Token not found in localStorage');
+		return;
+	  }
+  
+	  const config = {
+		headers: {
+		  'Authorization': `Bearer ${token}`
+		}
+	  };
+  
+	  // Hapus setoran
+	  const response = await axios.post('/api/setoran/delete.php', formData, config);
 	  console.log('Server Response:', response.data);
   
 	  if (response.data.status === 'success') {
-		await fetchData();
+		await fetchData(); // Ambil ulang data setoran setelah berhasil menghapus
 	  } else {
 		alert('Gagal menghapus setoran: ' + response.data.message);
 	  }
@@ -132,7 +160,7 @@
   onMounted(async () => {
 	await fetchData();
   });
-  </script>
+  </script>  
   
   <style>
   :root {
