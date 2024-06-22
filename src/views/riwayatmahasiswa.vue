@@ -74,12 +74,12 @@
 		return;
 	  }
   
-	  const setoranResponse = await axios.get(`/api/setoran/by-nim.php?nim=${nim}`);
+	  const setoranResponse = await axios.get(`https://samatif-ml.preview-domain.com/setoran/by-nim.php?nim=${nim}`);
 	  setoranList.value = setoranResponse.data.setoran;
   
 	  const token = localStorage.getItem('token');
 	  if (token) {
-		const dosenResponse = await axios.get(`/api/dosenpa/by-nim.php?nim=${nim}`, {
+		const dosenResponse = await axios.get(`https://samatif-ml.preview-domain.com/dosenpa/by-nim.php?nim=${nim}`, {
 		  headers: {
 			'Authorization': `Bearer ${token}`
 		  }
@@ -93,7 +93,7 @@
 		  namaDosen.value = dosenData ? dosenData['Nama Dosen PA'] : 'Tidak ditemukan';
 		}
   
-		const skillsResponse = await axios.get(`/api/setoran/sudahbelum.php?nim=${nim}`, {
+		const skillsResponse = await axios.get(`https://samatif-ml.preview-domain.com/setoran/sudahbelum.php?nim=${nim}`, {
 		  headers: {
 			'Authorization': `Bearer ${token}`
 		  }
@@ -118,7 +118,6 @@
 	}
   });
   </script>
-  
   
 <style>
 :root {

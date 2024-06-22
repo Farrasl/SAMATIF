@@ -57,7 +57,7 @@
         localStorage.setItem('token', data.token);
 
         // Fetch user data using the token
-        const userResponse = await axios.get('/api/login.php?action=get', {
+        const userResponse = await axios.get('https://samatif-ml.preview-domain.com/login.php?action=get', {
           headers: {
             'Authorization': `Bearer ${data.token}`
           }

@@ -123,7 +123,7 @@ onMounted(async () => {
       }
     };
 
-    const response = await axios.get('/api/surah/get-all.php', config);
+    const response = await axios.get('https://samatif-ml.preview-domain.com/surah/get-all.php', config);
     surahList.value = response.data;
   } catch (error) {
     console.error('Error fetching surah data:', error);
@@ -176,7 +176,7 @@ const simpanData = async () => {
       }
     };
 
-    const response = await axios.post('/api/setoran/insert.php', formData, config);
+    const response = await axios.post('https://samatif-ml.preview-domain.com/setoran/insert.php', formData, config);
 
     if (response.data.status === 'success') {
       alert('Data setoran berhasil ditambahkan.');

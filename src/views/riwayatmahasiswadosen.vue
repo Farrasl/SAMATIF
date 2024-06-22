@@ -94,11 +94,11 @@
 	  };
   
 	  // Ambil data setoran
-	  const setoranResponse = await axios.get(`/api/setoran/by-nim.php?nim=${nim.value}`, config);
+	  const setoranResponse = await axios.get(`https://samatif-ml.preview-domain.com/setoran/by-nim.php?nim=${nim.value}`, config);
 	  setoranList.value = setoranResponse.data.setoran;
   
 	  // Ambil data persentase skills
-	  const skillsResponse = await axios.get(`/api/setoran/sudahbelum.php?nim=${nim.value}`, config);
+	  const skillsResponse = await axios.get(`https://samatif-ml.preview-domain.com/setoran/sudahbelum.php?nim=${nim.value}`, config);
 	  const { percentages } = skillsResponse.data;
   
 	  if (percentages) {
@@ -143,7 +143,7 @@
 	  };
   
 	  // Hapus setoran
-	  const response = await axios.post('/api/setoran/delete.php', formData, config);
+	  const response = await axios.post('https://samatif-ml.preview-domain.com/setoran/delete.php', formData, config);
 	  console.log('Server Response:', response.data);
   
 	  if (response.data.status === 'success') {

@@ -105,15 +105,15 @@ async function fetchData() {
         };
 
         // Fetch PA's name
-        const responseDosen = await axios.get(`/api/dosenpa/by-nim.php?nim=${nim}`, config);
+        const responseDosen = await axios.get(`https://samatif-ml.preview-domain.com/dosenpa/by-nim.php?nim=${nim}`, config);
         namaDosen.value = responseDosen.data.nama_dosen;
 
         // Fetch other data as before
-        const responseNama = await axios.get(`/api/setoran/sudahbelum.php?nim=${nim}`, config);
+        const responseNama = await axios.get(`https://samatif-ml.preview-domain.com/setoran/sudahbelum.php?nim=${nim}`, config);
         const dataNama = responseNama.data;
         mahasiswa.value = dataNama.Nama;
 
-        const responseSetoran = await axios.get(`/api/setoran/by-nim.php?nim=${nim}`, config);
+        const responseSetoran = await axios.get(`https://samatif-ml.preview-domain.com/setoran/by-nim.php?nim=${nim}`, config);
         const dataSetoran = responseSetoran.data.setoran;
         setoran.value = dataSetoran.map(item => ({ ...item, persyaratan: getPersyaratan(item.nama_surah) }));
 

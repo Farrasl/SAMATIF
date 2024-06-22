@@ -69,7 +69,7 @@
 			// Ambil token dari localStorage
 			const token = localStorage.getItem('token');
 			// Panggil endpoint dengan NIM yang diambil dari localStorage dan sertakan header otorisasi
-			const response = await axios.get(`/api/dosenpa/by-nim.php?nim=${nim}`, {
+			const response = await axios.get(`https://samatif-ml.preview-domain.com/dosenpa/by-nim.php?nim=${nim}`, {
 			  headers: {
 				Authorization: `Bearer ${token}` // Sertakan token dalam header otorisasi
 			  }
