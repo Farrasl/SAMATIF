@@ -48,6 +48,7 @@
           "Content-Type": "application/json",
           Accept: "application/json"
         }
+        http2: false // Nonaktifkan HTTP/2
       });
 
       console.log('Response:', response);
