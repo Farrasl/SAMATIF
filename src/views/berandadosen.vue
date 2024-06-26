@@ -49,7 +49,6 @@
   };
 </script>
 
-
 <style>
 :root {
 	--primary: #4ade80;

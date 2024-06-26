@@ -1,54 +1,68 @@
 <template>
-    <div class="lupapassword-body">
-      <div id="aa">
-        <h1>Reset Password</h1>
-        <form @submit.prevent="login">
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" v-model="username" placeholder="Username" required>
-          </div>
-  
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" v-model="password" placeholder="Password" required>
-          </div>
-  
-          <div class="form-group">
-            <label for="confirmPassword">Konfirmasi Password:</label>
-            <input type="password" id="confirmPassword" v-model="confirmPassword" placeholder="Konfirmasi Password" required>
-          </div>
-  
-          <button type="submit" class="login-btn">Reset Password</button>
-        </form>
-  
-        <button class="login-btn" @click="redirectToLogin">Kembali ke Login</button>
-      </div>
+  <div class="lupapassword-body">
+    <div id="aa">
+      <h1>Reset Password</h1>
+      <form @submit.prevent="resetPassword">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" v-model="username" placeholder="Username" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password Baru:</label>
+          <input type="password" id="password" v-model="password" placeholder="Password" required>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Konfirmasi Password:</label>
+          <input type="password" id="confirmPassword" v-model="confirmPassword" placeholder="Konfirmasi Password" required>
+        </div>
+
+        <button type="submit" class="login-btn">Reset Password</button>
+      </form>
+
+      <button class="login-btn" @click="redirectToLogin">Kembali ke Login</button>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        username: '',
-        password: '',
-        confirmPassword: ''
-      };
-    },
-    methods: {
-      login() {
-        if (this.password !== this.confirmPassword) {
-          alert('Password dan Konfirmasi Password tidak sesuai.');
-          return;
-        }
-        alert('Password berhasil direset!');
-      },
-      redirectToLogin() {
-        this.$router.push({ name: 'Login' });
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      username: '',
+      password: '',
+      confirmPassword: ''
+    };
+  },
+  methods: {
+    resetPassword() {
+      if (this.password !== this.confirmPassword) {
+        alert('Password dan Konfirmasi Password tidak sesuai.');
+        return;
       }
+
+      axios.post('https://samatif.xyz/lupapassword.php', {
+        username: this.username,
+        password: this.password,
+        confirmPassword: this.confirmPassword
+      })
+      .then(response => {
+        alert(response.data.message); // Tampilkan pesan dari backend
+      })
+      .catch(error => {
+        alert('Gagal mereset password.'); // Tampilkan pesan kesalahan jika gagal
+        console.error(error); // Cetak error ke konsol untuk debugging
+      });
+    },
+    redirectToLogin() {
+      this.$router.push({ name: 'Login' }); // Redirect ke halaman login
     }
-  };
-  </script>
+  }
+};
+</script>
   
   <style scoped>
   .lupapassword-body {

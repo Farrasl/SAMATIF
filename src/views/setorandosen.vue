@@ -80,7 +80,6 @@ const fetchData = async () => {
 
     const response = await axios.get(`https://samatif.xyz/dosenpa/by-nip.php?nip=${nip}`, config);
 
-    // Pastikan respons memiliki properti dosen
     if (!response.data.dosen || response.data.dosen.length === 0) {
       console.error('Data dosen tidak ditemukan atau respons tidak sesuai:', response.data);
       return;

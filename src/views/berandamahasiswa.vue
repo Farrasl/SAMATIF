@@ -19,16 +19,14 @@
   
 	<div class="welcome">
 	  <h2 class="Selamatdatang">Assalamualaikum <span class="namauser" style="font-style: italic;">{{ nama }}</span></h2>
-	  <p>
+	</div>
+	<p class="isiparagraf">
 		Aplikasi Setoran Hafalan Mahasiswa adalah platform yang dirancang untuk memudahkan mahasiswa dalam mengatur dan melacak progres hafalan mereka. Dalam konteks ini, hafalan merujuk pada ayat-ayat Al-Qur'an, teks-teks klasik, atau materi akademis lain yang perlu dipelajari dan dihafal secara berkala.
-	  </p>
-	  <p>
+
 		Dengan aplikasi ini, mahasiswa dapat dengan mudah merekam setoran hafalan mereka, mendapatkan umpan balik dari dosen atau mentor, serta memantau perkembangan mereka dari waktu ke waktu. Fitur-fitur yang intuitif dan user-friendly memastikan pengalaman pengguna yang menyenangkan dan efektif.
-	  </p>
-	  <p>
+
 		Selamat menggunakan Aplikasi Setoran Hafalan Mahasiswa! Semoga alat ini membantu Anda dalam mencapai tujuan akademis dan spiritual Anda dengan lebih teratur dan sistematis. Teruslah berusaha dan jangan pernah berhenti belajar.
 	  </p>
-	</div>
   </template>
   
   <script>
@@ -186,4 +184,82 @@ button {
 .namauser {
     color: var(--primary-alt);
 }
+
+.isiparagraf{
+	margin-top: -150px;
+	margin-left: 250px;
+	margin-right: 100px;
+}
+
+@media (max-width: 1024px) {
+    .main {
+        padding-left: 6rem;
+    }
+
+    .Header-Beranda {
+        width: calc(100% - 100px);
+        padding: 5px 10px 10px 2px;
+    }
+
+    .beranda h3 {
+        margin-right: 0;
+    }
+
+    .beranda span {
+        margin-left: 0;
+    }
+
+    .welcome {
+        margin-left: 0;
+        width: 100%;
+        padding: 0 1rem;
+    }
+
+    .desc {
+        margin-left: 0;
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+
+    .isiparagraf {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .Header-Beranda {
+        top: 60px;
+        padding: 5px;
+    }
+
+    .welcome {
+        margin-top: 100px;
+    }
+
+    .Selamatdatang {
+        font-size: 1.5rem;
+    }
+
+    .isiparagraf {
+        margin-top: -100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .Header-Beranda {
+        width: 100%;
+        top: 50px;
+    }
+
+    .welcome {
+        margin-top: 80px;
+    }
+
+    .isiparagraf {
+        margin-top: -80px;
+    }
+}
+
 </style>

@@ -13,7 +13,6 @@
         <p>Semester {{ userData.semester }}</p>
     </div>
 </div>
-
 		<ul>
 			<li>
 				<router-link to="/Beranda" class="button">

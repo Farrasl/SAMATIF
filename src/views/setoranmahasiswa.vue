@@ -22,22 +22,40 @@
         <i class='bx bxs-download'></i>
     </button>
 
-    <table border="3" class="Tabel" ref="tabel">
-        <tr>
-            <th>No</th>
-            <th>Surah</th>
-            <th>Tanggal</th>
-            <th>Persyaratan</th>
-            <th>Paraf Dosen PA</th>
-        </tr>
-        <tr v-for="(surah, index) in combinedSurahs" :key="index">
-            <td>{{ index + 1 }}</td>
-            <td>{{ surah.nama_surah }}</td>
-            <td>{{ surah.tanggal }}</td>
-            <td>{{ surah.persyaratan }}</td>
-            <td>{{ surah.paraf_dosen }}</td>
-        </tr>
-    </table>
+    <div class="table-container"> 
+        <div class="head-card">
+            <img src="../assets/uinsuska.png" alt="UIN Suska Logo" class="logo">
+            <div class="isitable">
+                <h2>KARTU SETORAN HAFALAN JUZ 30</h2>
+                <p>PROGRAM STUDI TEKNIK INFORMATIKA</p>
+                <p>FAKULTAS SAINS DAN TEKNOLOGI</p>
+                <p>UNIVERSITAS ISLAM NEGERI SULTAN SYARIF KASIM RIAU</p>
+            </div>
+        </div>
+        <div class="setoranmahasiswa">
+            <div class="info-container">
+                <span>Nama Mahasiswa: {{ mahasiswa }}</span>
+                <span>NIM: {{ nim }}</span>
+                <span>Penasehat Akademik: {{ namaDosen }}</span>
+            </div>
+        </div>
+        <table border="3" class="Tabel" ref="tabel">
+            <tr>
+                <th>No</th>
+                <th>Surah</th>
+                <th>Tanggal</th>
+                <th>Persyaratan</th>
+                <th>Paraf Dosen PA</th>
+            </tr>
+            <tr v-for="(surah, index) in combinedSurahs" :key="index">
+                <td>{{ index + 1 }}</td>
+                <td>{{ surah.nama_surah }}</td>
+                <td>{{ surah.tanggal }}</td>
+                <td>{{ surah.persyaratan }}</td>
+                <td>{{ surah.paraf_dosen }}</td>
+            </tr>
+        </table>
+    </div>
 </template>
 
 <script setup>
@@ -50,6 +68,7 @@ import Header from '../components/header.vue';
 
 const setoran = ref([]);
 const mahasiswa = ref('');
+const nim = ref('');
 const surahBelumDisetorkan = ref([]);
 const namaDosen = ref('');
 const tableRef = ref(null);
@@ -82,9 +101,10 @@ function getPersyaratan(namaSurah) {
 async function fetchData() {
     const storedUserData = localStorage.getItem('userData');
     const userData = storedUserData ? JSON.parse(storedUserData) : null;
-    const nim = userData ? userData.nim : null;
+    nim.value = userData ? userData.nim : null;
+    mahasiswa.value = userData ? userData.name : null;
 
-    if (!nim) {
+    if (!nim.value) {
         console.error('NIM not found in localStorage');
         return;
     }
@@ -105,16 +125,16 @@ async function fetchData() {
         };
 
         // Fetch PA's name
-        const responseDosen = await axios.get(`https://samatif.xyz/dosenpa/by-nim.php?nim=${nim}`, config);
+        const responseDosen = await axios.get(`https://samatif.xyz/dosenpa/by-nim.php?nim=${nim.value}`, config);
         const dosenData = responseDosen.data.mahasiswa[0];
         namaDosen.value = dosenData ? dosenData['Nama Dosen PA'] : 'Tidak ditemukan';
 
         // Fetch other data as before
-        const responseNama = await axios.get(`https://samatif.xyz/setoran/sudahbelum.php?nim=${nim}`, config);
+        const responseNama = await axios.get(`https://samatif.xyz/setoran/sudahbelum.php?nim=${nim.value}`, config);
         const dataNama = responseNama.data;
         mahasiswa.value = dataNama.Nama;
 
-        const responseSetoran = await axios.get(`https://samatif.xyz/setoran/by-nim.php?nim=${nim}`, config);
+        const responseSetoran = await axios.get(`https://samatif.xyz/setoran/by-nim.php?nim=${nim.value}`, config);
         const dataSetoran = responseSetoran.data.setoran;
         setoran.value = dataSetoran.map(item => ({ ...item, persyaratan: getPersyaratan(item.nama_surah) }));
 
@@ -147,17 +167,17 @@ const combinedSurahs = computed(() => {
 const downloadTable = async () => {
     try {
         await nextTick(); // Ensure elements are rendered before accessing ref
-        const table = tableRef.value;
-        if (!table) {
-            console.error('Error: Table reference is not set.');
+        const tableContainer = document.querySelector('.table-container');
+        if (!tableContainer) {
+            console.error('Error: Table container not found.');
             return;
         }
-        
-        const canvas = await html2canvas(table);
+
+        const canvas = await html2canvas(tableContainer);
         const imgData = canvas.toDataURL('image/png');
 
         const pdf = new jsPDF({
-            orientation: 'landscape',
+            orientation: 'landscape'
         });
 
         const imgProps = pdf.getImageProperties(imgData);
@@ -165,7 +185,7 @@ const downloadTable = async () => {
         const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
         pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save('tabel-setoran.pdf');
+        pdf.save('Kartu Setoran.pdf');
     } catch (error) {
         console.error('Error generating PDF:', error);
     }
@@ -178,60 +198,60 @@ onMounted(() => {
 
 <style>
 :root {
-	--primary: #4ade80;
-	--primary-alt: #22c55e;
-	--grey: #64748b;
-	--dark: #1e293b;
-	--dark-alt: #334155;
-	--light: #f1f5f9;
-	--sidebar-width: 300px;
+    --primary: #4ade80;
+    --primary-alt: #22c55e;
+    --grey: #64748b;
+    --dark: #1e293b;
+    --dark-alt: #334155;
+    --light: #f1f5f9;
+    --sidebar-width: 300px;
 }
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: 'Fira sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Fira sans', sans-serif;
 }
 
 body {
-	background: var(--light);
+    background: var(--light);
 }
 
 button {
-	cursor: pointer;
-	appearance: none;
-	border: none;
-	outline: none;
-	background: none;
+    cursor: pointer;
+    appearance: none;
+    border: none;
+    outline: none;
+    background: none;
 }
 
 .app {
-	display: flex;
+    display: flex;
 
-	main {
-		flex: 1 1 0;
-		padding: 2rem;
+    main {
+        flex: 1 1 0;
+        padding: 2rem;
 
-		@media (max-width: 1024px) {
-			padding-left: 6rem;
-		}
-	}
+        @media (max-width: 1024px) {
+            padding-left: 6rem;
+        }
+    }
 }
 
 .Header-Setoran {
-background: #FFFFFF;
-position: absolute;
-top: 75px;
-right: 0px;
-display: flex;
-flex-direction: column;
-align-items: center;
-margin-top: -10px;
-padding: 5px 25px 10px 2px;
-box-sizing: border-box;
-width: calc(100% - 225px); 
-border: 1px solid var(--dark);
+    background: #FFFFFF;
+    position: absolute;
+    top: 75px;
+    right: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -10px;
+    padding: 5px 25px 10px 2px;
+    box-sizing: border-box;
+    width: calc(100% - 225px); 
+    border: 1px solid var(--dark);
 }
 
 .setoran {
@@ -239,7 +259,6 @@ border: 1px solid var(--dark);
     justify-content: space-between;
     align-items: center;
 }
-
 
 .setoran h3 {
     margin-right: 475px; 
@@ -250,23 +269,56 @@ border: 1px solid var(--dark);
 }
 
 .download {
-	margin-top: 150px;
-	margin-right: 50px;
-	margin-left: 1275px;
-	box-sizing: border-box;
-	border: 1px solid var(--dark);
+    margin-top: 150px;
+    margin-right: 50px;
+    margin-left: 1275px;
+    box-sizing: border-box;
+    border: 1px solid var(--dark);
 }
 
 .Tabel {
-	width: 80%;
-	margin-top:10px;
-	margin-left: 250px;
-	margin-bottom: 30px;
+    width: 80%;
+    margin-top: 10px;
+    margin-left: 250px;
+    margin-bottom: 30px;
 }
 
 td {
-	text-align: center;
+    text-align: center;
 }
 
+.head-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.head-card .logo{
+    width: 100px;
+    height: 100px;
+}
+
+.logo {
+    margin-right: 20px;
+}
+
+.isitable {
+    text-align: center;
+}
+
+.setoranmahasiswa {
+    margin-left: 250px;
+}
+
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    width: 90%; /* Adjust as needed */
+    margin-bottom: 20px;
+}
+
+.info-container span {
+    flex: 1;
+    text-align: center;
+}
 </style>
