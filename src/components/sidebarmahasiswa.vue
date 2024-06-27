@@ -35,7 +35,7 @@
 				</router-link>
 				<span class="tooltip">Riwayat</span>
 			</li>
-			<li class="logout">
+			<li class="logoutmahasiswa">
 				<router-link to="/" class="logout-button">
 					<i class="bx bxs-log-out"></i>
 					<span class="nav-item">Logout</span>
@@ -236,7 +236,7 @@ export default {
 	}
 }
 
-.logout {
+.logoutmahasiswa {
 	position: absolute;
 	top: 320px;
 	width: 100%; 

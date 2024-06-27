@@ -58,53 +58,53 @@
   const namaDosen = ref('');
   
   onMounted(async () => {
-    try {
-        const userData = localStorage.getItem('userData');
-        const nim = userData ? JSON.parse(userData).nim : null;
-        if (!nim) {
-            console.error('NIM not found in localStorage');
-            return;
-        }
-
-        const token = localStorage.getItem('token');
-        if (!token) {
-            console.error('User not authenticated');
-            return;
-        }
-
-        // Fetch Setoran
-        const setoranResponse = await axios.get(`https://samatif.xyz/setoran/by-nim.php?nim=${nim}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        setoranList.value = setoranResponse.data.setoran;
-
-        // Fetch Skills
-        const skillsResponse = await axios.get(`https://samatif.xyz/setoran/sudahbelum.php?nim=${nim}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        if (skillsResponse.data.status === 'error') {
-            console.error('Error fetching skills data:', skillsResponse.data.message);
-        } else {
-            const { percentages } = skillsResponse.data;
-            percentages.forEach((item) => {
-                const index = skills.value.findIndex((skill) => skill.lang === item.lang);
-                if (index !== -1) {
-                    skills.value[index].percent = item.percent;
-                }
-            });
-        }
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
-});
+	try {
+	  const userData = localStorage.getItem('userData');
+	  const nim = userData ? JSON.parse(userData).nim : null;
+	  if (!nim) {
+		console.error('NIM not found in localStorage');
+		return;
+	  }
+  
+	  const token = localStorage.getItem('token');
+	  if (!token) {
+		console.error('User not authenticated');
+		return;
+	  }
+  
+	  // Fetch Setoran
+	  const setoranResponse = await axios.get(`https://samatif.xyz/setoran/by-nim.php?nim=${nim}`, {
+		headers: {
+		  'Authorization': `Bearer ${token}`
+		}
+	  });
+	  setoranList.value = setoranResponse.data.setoran;
+  
+	  // Fetch Skills
+	  const skillsResponse = await axios.get(`https://samatif.xyz/setoran/sudahbelum.php?nim=${nim}`, {
+		headers: {
+		  'Authorization': `Bearer ${token}`
+		}
+	  });
+	  if (skillsResponse.data.status === 'error') {
+		console.error('Error fetching skills data:', skillsResponse.data.message);
+	  } else {
+		const { percentages } = skillsResponse.data;
+		percentages.forEach((item) => {
+		  const index = skills.value.findIndex((skill) => skill.lang === item.lang);
+		  if (index !== -1) {
+			skills.value[index].percent = item.percent;
+		  }
+		});
+	  }
+	} catch (error) {
+	  console.error('Error fetching data:', error);
+	}
+  });
   </script>
   
-<style>
-:root {
+  <style>
+  :root {
 	--primary: #4ade80;
 	--primary-alt: #22c55e;
 	--grey: #64748b;
@@ -112,119 +112,144 @@
 	--dark-alt: #334155;
 	--light: #f1f5f9;
 	--sidebar-width: 300px;
-}
-
-* {
+  }
+  
+  * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	font-family: 'Fira sans', sans-serif;
-}
-
-body {
+  }
+  
+  body {
 	background: var(--light);
-}
-
-button {
+  }
+  
+  button {
 	cursor: pointer;
 	appearance: none;
 	border: none;
 	outline: none;
 	background: none;
-}
-
-.app {
+  }
+  
+  .app {
 	display: flex;
-
-	main {
-		flex: 1 1 0;
-		padding: 2rem;
-
-		@media (max-width: 1024px) {
-			padding-left: 6rem;
-		}
+  }
+  
+  main {
+	flex: 1 1 0;
+	padding: 2rem;
+  
+	@media (max-width: 1024px) {
+	  padding-left: 6rem;
 	}
-}
-
-.Header-Riwayat {
-background: #FFFFFF;
-position: absolute;
-top: 75px;
-right: 0px;
-display: flex;
-flex-direction: column;
-align-items: center;
-margin-top: -10px;
-padding: 5px 25px 10px 2px;
-box-sizing: border-box;
-width: calc(100% - 225px); 
-border: 1px solid var(--dark);
-}
-
-.riwayat {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-
-.riwayat h3 {
-    margin-right: 475px; 
-}
-
-.riwayat span {
-    margin-left: 400px; 
-}
-
-.Tabel-Riwayat {
+  }
+  
+  .Tabel-Riwayat {
 	width: 80%;
-	margin-top:150px;
+	margin-top: 90px;
 	margin-left: 250px;
 	margin-bottom: 30px;
-}
-
-td {
+  }
+  
+  td {
 	text-align: center;
-}
-
-.box{
+  }
+  
+  .box {
 	width: 1095px;
 	padding: 10px;
-    margin-left: 250px;
+	margin-left: 250px;
 	margin-top: 30px;
-    margin-bottom: 30px;
-	background:#f3f3f3;
+	margin-bottom: 30px;
+	background: #f3f3f3;
 	box-shadow: 3px 3px 10px 3px rgba(0, 0, 0, 0.1);
-}
-
-ul li{
+  }
+  
+  ul li {
 	list-style-type: none;
-	padding:10px;
-}
-
-.lang{
-	margin:5px;
+	padding: 10px;
+  }
+  
+  .lang {
+	margin: 5px;
 	font-size: 15px;
-}
-
-.bar{
+  }
+  
+  .bar {
 	width: 100%;
-	background:#dfdfdf;
+	background: #dfdfdf;
 	overflow: hidden;
-	padding:5px;
-}
-
-.progress{
-	float:left;
-	padding:15px;
-}
-
-.percent{
+	padding: 5px;
+  }
+  
+  .progress {
+	float: left;
+	padding: 15px;
+  }
+  
+  .percent {
 	float: right;
 	font-weight: 600;
 	height: 30px;
 	line-height: 30px;
-}
-
-
-</style>
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 1024px) {
+	.Header-Riwayat {
+	  width: calc(100% - 50px);
+	}
+  
+	.riwayat h3 {
+	  margin-right: 0;
+	  text-align: center;
+	}
+  
+	.riwayat span {
+	  margin-left: 0;
+	}
+  
+	.Tabel-Riwayat {
+	  margin-left: 20px;
+	  width: calc(100% - 40px);
+	}
+  
+	.box {
+	  margin-left: 20px;
+	  width: calc(100% - 40px);
+	}
+  }
+  
+  @media (max-width: 768px) {
+	.Tabel-Riwayat {
+	  margin-top: 100px;
+	}
+  
+	.Header-Riwayat {
+	  top: 60px;
+	}
+  }
+  
+  @media (max-width: 480px) {
+	.Tabel-Riwayat {
+	  margin-top: 80px;
+	}
+  
+	.Header-Riwayat {
+	  padding: 5px;
+	}
+  
+	.Tabel-Riwayat th,
+	.Tabel-Riwayat td {
+	  font-size: small;
+	  padding: 5px;
+	}
+  
+	.box {
+	  padding: 5px;
+	}
+  }
+  </style>
+  

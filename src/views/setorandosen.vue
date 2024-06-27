@@ -15,7 +15,7 @@
       <div class="recycler-view">
         <div class="list-item" v-for="item in items" :key="item.id" @click="handleItemClick(item)">
           <div class="list-item-content">
-            <img :src="item.image" alt="Foto Mahasiswa" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+            <img :src="item.image" alt="Foto Mahasiswa" class="item-image">
             <div class="item-info">
               <p>Nama: {{ item.name }}</p>
               <p>NIM: {{ item.nim }}</p>
@@ -78,11 +78,9 @@ const fetchData = async () => {
   }
 };
 
-
 const handleItemClick = (item) => {
   router.push({ name: 'inputsetoran', params: { id: item.id, name: item.name, nim: item.nim } });
 };
-
 
 onMounted(() => {
   fetchData();
@@ -121,55 +119,30 @@ button {
 
 .app {
   display: flex;
-
-  main {
-    flex: 1 1 0;
-    padding: 2rem;
-
-    @media (max-width: 1024px) {
-      padding-left: 6rem;
-    }
-  }
+  flex-wrap: wrap;
 }
 
-.Header-Setoran {
-  background: #FFFFFF;
-  position: absolute;
-  top: 75px;
-  right: 0px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 5px 25px 10px 2px;
-  box-sizing: border-box;
-  width: calc(100% - 225px); 
-  border: 1px solid var(--dark);
-}
-
-.setoran {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.setoran-dosen h3 {
-  margin-left: -550px; 
+.main {
+  flex: 1 1 0;
+  padding: 2rem;
 }
 
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 1rem;
 }
 
 .recycler-view-container {
-  margin-top: 150px; 
-  margin-left: 200px;
-  width: 1100px;
+  margin-top: 90px; 
+  width: 100%;
+  max-width: 1100px;
+  padding: 0 1rem;
 }
 
 .recycler-view {
-  margin-top: 10px;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
 }
@@ -183,6 +156,13 @@ button {
   margin-left: 10px;
 }
 
+.item-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
 .list-item {
   padding: 10px;
   border-bottom: 1px solid #ccc;
@@ -193,4 +173,31 @@ button {
   background-color: var(--primary);
 }
 
+@media (max-width: 1024px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .main {
+    padding-left: 6rem;
+  }
+
+  .header-setoran {
+    width: calc(100% - 2rem);
+    left: 1rem;
+    right: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .recycler-view-container {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .setoran-dosen h3 {
+    margin-left: 0;
+    text-align: center;
+  }
+}
 </style>

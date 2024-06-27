@@ -249,7 +249,7 @@ button {
 }
 
 .Mahasiswasetoran {
-  margin-top: 150px;
+  margin-top: 100px;
   margin-left: -700px;
   font-size: large;
 }

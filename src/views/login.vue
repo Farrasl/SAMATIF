@@ -2,8 +2,9 @@
   <div class="login-container">
     <div class="login-image">
       <img src="../assets/uinsuska.png" alt="UIN Suska" class="logo">
-      <p class="logo-text">SETORAN AYAT MAHASISWA TIF</p>
       <h2>SAMATIF</h2>
+      <p class="logo-text">SETORAN AYAT MAHASISWA TIF</p>
+  
     </div>
     <div class="login-form">
       <h2>Silahkan Login</h2>
@@ -84,7 +85,6 @@ export default {
 </script>
 
 <style scoped>
-/* Gaya untuk kontainer login */
 .login-container {
   position: relative;
   display: flex;
@@ -97,15 +97,16 @@ export default {
 /* Gaya untuk gambar dan teks logo */
 .login-image {
   position:fixed;
-  top: 20px;
+  top: 30px;
   left: 0;
   text-align: center;
   width: 100%;
 }
 
 .login-image .logo {
-  width: 80px; /* Sesuaikan ukuran logo untuk mobile */
-  height: 80px;
+  width: 100px; /* Sesuaikan ukuran logo untuk mobile */
+  height: 100px;
+  margin-right: 50px;
 }
 
 .logo-text {
@@ -124,7 +125,7 @@ export default {
   text-align: center;
   max-width: 300px; /* Sesuaikan lebar maksimum untuk mobile */
   width: 100%;
-margin-top: 60px;
+  margin-top: 60px;
 }
 
 .login-form h2 {
