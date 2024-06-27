@@ -278,7 +278,7 @@ button {
 
 .Tabel {
     width: 80%;
-    margin-top: 10px;
+    margin-top: -20px;
     margin-left: 250px;
     margin-bottom: 30px;
 }
@@ -307,13 +307,13 @@ td {
 }
 
 .setoranmahasiswa {
-    margin-left: 250px;
+    margin-left: 175px;
 }
 
 .info-container {
     display: flex;
     justify-content: space-between;
-    width: 90%; /* Adjust as needed */
+    width: 100%; /* Adjust as needed */
     margin-bottom: 20px;
 }
 

@@ -51,11 +51,10 @@
 export default {
   data() {
     return {
-      userData: {}  // Initialize userData
+      userData: {}  
     };
   },
   mounted() {
-    // Retrieve userData from localStorage or Vuex
     const userData = JSON.parse(localStorage.getItem('userData'));
     if (userData) {
       this.userData = userData;
@@ -239,7 +238,7 @@ export default {
 
 .logout {
 	position: absolute;
-	top: 350px;
+	top: 320px;
 	width: 100%; 
 }
 
