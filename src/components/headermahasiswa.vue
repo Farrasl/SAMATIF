@@ -13,7 +13,6 @@
           <a href="#" @click.prevent="navigateTo('Login')"><i class='bx bxs-log-out'></i> Logout</a>
         </div>
       </div>
-      
     </div>
   </div>
 </template>
@@ -24,7 +23,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      nama: '', 
+      nama: '',
       namaDosen: '',
       sidebarActive: false,
       sidebarWidth: '225px',
@@ -90,6 +89,35 @@ export default {
 </script>
 
 <style>
+:root {
+  --primary: #4ade80;
+  --primary-alt: #22c55e;
+  --grey: #64748b;
+  --dark: #1e293b;
+  --dark-alt: #334155;
+  --light: #f1f5f9;
+  --sidebar-width: 225px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Fira sans', sans-serif;
+}
+
+body {
+  background: var(--light);
+}
+
+button {
+  cursor: pointer;
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+}
+
 .Header {
   background: #FFFFFF;
   position: absolute;
@@ -100,28 +128,26 @@ export default {
   align-items: center;
   padding: 5px 25px 10px 2px;
   box-sizing: border-box;
-  width: calc(100% - 225px); 
+  width: calc(100% - 225px);
   border: 1px solid var(--dark);
 }
 
 .user-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .left-content {
   display: flex;
   align-items: center;
-  margin-right: 700px; /* Adjust as needed */
 }
 
 .user-header p {
   color: var(--dark);
   opacity: 1;
-  margin-right: 1rem;
-  
 }
-
 
 .user-img {
   width: 50px;
@@ -129,21 +155,28 @@ export default {
   border: 2px solid var(--primary-alt);
 }
 
+.dropdownheader {
+  position: relative;
+}
+
 .dropdownheader button {
-  font-size: 24px; 
-  padding: 3px; 
+  font-size: 24px;
+  padding: 5px;
 }
 
 .dropdownheader-content {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 140px; 
-  box-shadow: 0px 8px 16px 0px rgba(2,5,5,5.2);
+  min-width: 140px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  transition: transform 0.3s ease; /* Transition for dropdown animation */
-  transform-origin: top right; /* Set transform origin to top right */
-  right: 0; /* Position dropdown to the right */
+  right: 0;
+  transition: transform 0.3s ease;
+}
+
+.dropdownheader:hover .dropdownheader-content {
+  display: block;
 }
 
 .dropdownheader-content a {
@@ -157,42 +190,57 @@ export default {
   background-color: #f1f1f1;
 }
 
-.dropdownheader:hover .dropdownheader-content {
-  display: block;
-  transform: translateX(calc(-100% + 48px)); /* Slide to the left */
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .Header {
+    width: calc(100% - 80px);
+  }
 }
 
-@media (max-width: 400px) {
-    .user-header {
-      display: none;
+@media (max-width: 768px) {
+  .Header {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px;
   }
-}
-  @media (max-width: 768px) {
-    .user-img{
-      margin-right: 20px;
-      padding: 0;
-  }
- .user-header span {
-  margin-left: -50px;
- }
- .user-header p{
-  margin-left: -690px;
- }
- .user-header button{
-  margin-left: -20px;
- }
+
   .user-header {
-  display: flex;
-  width: 10px;
-  align-items: center;
-  padding: 1px;
-  
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .left-content {
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+
+  .user-header p {
+    margin: 5px 0;
+  }
+
+  .dropdownheader-content {
+    left: 0;
+    right: auto;
+  }
 }
 
-    .dropdownheader{
-      width: 50px;
-     
-    }
-}
+@media (max-width: 480px) {
+  .user-header {
+    flex-direction: column;
+  }
 
+  .user-header p {
+    font-size: small;
+  }
+
+  .user-img {
+    width: 40px;
+  }
+
+  .dropdownheader-content a {
+    padding: 10px 15px;
+    font-size: small;
+  }
+}
 </style>
