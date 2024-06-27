@@ -93,7 +93,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Sidebar from '../components/sidebardosen.vue';
-import Header from '../components/header.vue';
+import Header from '../components/headerdosen.vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();

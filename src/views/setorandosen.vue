@@ -8,29 +8,9 @@
       <!-- Content -->
       <router-view />
     </div>
-    <div class="Isi-Setoran">
-      <div class="Header-Setoran">
-        <div class="setoran-dosen">
-          <h3><i class="bx bxs-book"></i>Setoran</h3>
-        </div>
-      </div>
-    </div>
     <div class="recycler-view-container">
       <div>
         <h2>Mahasiswa</h2>
-        <div class="dropdownsemester">
-          <button><i class="bx bx-menu"></i></button>
-          <div class="dropdownsemester-content">
-            <a href="#">Semester 1</a>
-            <a href="#">Semester 2</a>
-            <a href="#">Semester 3</a>
-            <a href="#">Semester 4</a>
-            <a href="#">Semester 5</a>
-            <a href="#">Semester 6</a>
-            <a href="#">Semester 7</a>
-            <a href="#">Semester 8</a>
-          </div>
-        </div>
       </div>
       <div class="recycler-view">
         <div class="list-item" v-for="item in items" :key="item.id" @click="handleItemClick(item)">
@@ -50,7 +30,7 @@
 
 <script setup>
 import Sidebar from '../components/sidebardosen.vue';
-import Header from '../components/header.vue';
+import Header from '../components/headerdosen.vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
@@ -213,44 +193,4 @@ button {
   background-color: var(--primary);
 }
 
-.dropdownsemester {
-  position: absolute;
-  top: 0; 
-  right: 0; 
-  margin-top: 150px; 
-  margin-right: 990px; 
-}
-
-.dropdownsemester button {
-  font-size: 24px; 
-  padding: 5px; 
-}
-
-.dropdownsemester-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 140px; 
-  box-shadow: 0px 8px 16px 0px rgba(2,5,5,5.2);
-  z-index: 1;
-}
-
-.dropdownsemester-content a {
-  color: black;
-  padding: 16px 20px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdownsemester-content a:hover {
-  background-color: #f1f1f1;
-}
-
-.dropdownsemester:hover .dropdownsemester-content {
-  display: block;
-}
-
-.dropdownsemester:hover .dropbtn {
-  background-color: #3e8e41;
-}
 </style>

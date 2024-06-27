@@ -8,29 +8,9 @@
         <!-- Content -->
         <router-view />
       </div>
-      <div class="Isi-Riwayat">
-        <div class="Header-Riwayat">
-          <div class="riwayat-dosen">
-            <h3><i class="bx bxs-check-square"></i>Riwayat</h3>
-          </div>
-        </div>
-      </div>
       <div class="recycler-view-container">
         <div>
         <h2>Mahasiswa</h2>
-        <div class="dropdownsemester">
-        <button><i class="bx bx-menu"></i></button>
-        <div class="dropdownsemester-content">
-            <a href="#">Semester 1</a>
-            <a href="#">Semester 2</a>
-            <a href="#">Semester 3</a>
-            <a href="#">Semester 4</a>
-            <a href="#">Semester 5</a>
-            <a href="#">Semester 6</a>
-            <a href="#">Semester 7</a>
-            <a href="#">Semester 8</a>
-        </div>
-        </div>
 		</div>	
     <div class="recycler-view">
         <div class="list-item" v-for="item in items" :key="item.id" @click="handleItemClick(item)">
@@ -50,7 +30,7 @@
 
 <script setup>
 import Sidebar from '../components/sidebardosen.vue';
-import Header from '../components/header.vue';
+import Header from '../components/headerdosen.vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';

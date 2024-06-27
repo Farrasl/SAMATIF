@@ -8,15 +8,6 @@
         <router-view />
     </div>
 
-    <div class="Isi-Setoran">
-        <div class="Header-Setoran">
-            <div class="setoran">
-                <h3><i class="bx bxs-book"></i>Setoran</h3>
-                <span>PA. {{ namaDosen }}</span>
-            </div>
-        </div>
-    </div>
-
     <button class="download" @click="downloadTable">
         <span>Download</span>
         <i class='bx bxs-download'></i>
@@ -64,7 +55,7 @@ import axios from 'axios';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import Sidebar from '../components/sidebarmahasiswa.vue';
-import Header from '../components/header.vue';
+import Header from '../components/headermahasiswa.vue';
 
 const setoran = ref([]);
 const mahasiswa = ref('');
@@ -124,11 +115,6 @@ async function fetchData() {
             }
         };
 
-        // Fetch PA's name
-        const responseDosen = await axios.get(`https://samatif.xyz/dosenpa/by-nim.php?nim=${nim.value}`, config);
-        const dosenData = responseDosen.data.mahasiswa[0];
-        namaDosen.value = dosenData ? dosenData['Nama Dosen PA'] : 'Tidak ditemukan';
-
         // Fetch other data as before
         const responseNama = await axios.get(`https://samatif.xyz/setoran/sudahbelum.php?nim=${nim.value}`, config);
         const dataNama = responseNama.data;
@@ -145,6 +131,11 @@ async function fetchData() {
                 nama_surah,
                 persyaratan: getPersyaratan(nama_surah)
             }));
+
+        // Fetch advisor's name
+        const responseDosen = await axios.get(`https://samatif.xyz/dosenpa/by-nim.php?nim=${nim.value}`, config);
+        const dataDosen = responseDosen.data;
+        namaDosen.value = dataDosen.mahasiswa[0]['Nama Dosen PA'];
 
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -233,7 +224,7 @@ button {
         flex: 1 1 0;
         padding: 2rem;
 
-        @media (max-width: 1024px) {
+    @media (max-width: 1024px) {
             padding-left: 6rem;
         }
     }
@@ -255,7 +246,7 @@ button {
 }
 
 .setoran {
-    display: flex;
+    display: block;    
     justify-content: space-between;
     align-items: center;
 }
@@ -269,12 +260,17 @@ button {
 }
 
 .download {
-    margin-top: 150px;
-    margin-right: 50px;
+    margin-top: 90px;
+    margin-right: 70px;
     margin-left: 1275px;
+    color: white;
+    border: none;
+    border-radius: 7px;
     box-sizing: border-box;
     border: 1px solid var(--dark);
+    background-color: #10ba13;
 }
+
 
 .Tabel {
     width: 80%;
@@ -307,13 +303,13 @@ td {
 }
 
 .setoranmahasiswa {
-    margin-left: 175px;
+    margin-left: 250px;
 }
 
 .info-container {
     display: flex;
     justify-content: space-between;
-    width: 100%; /* Adjust as needed */
+    width: 90%; /* Adjust as needed */
     margin-bottom: 20px;
 }
 
@@ -321,4 +317,70 @@ td {
     flex: 1;
     text-align: center;
 }
+
+@media (max-width: 768px) {
+    .Header-Setoran {
+        margin-top: 10px;
+        margin-left: 230px;
+      padding: 20px;
+    }
+  
+    .setoran h3 {
+      margin-right: 10px;
+      font-size: 1rem;
+    }
+  
+    .setoran span {
+      margin-left: auto;
+      font-size: 0.8rem;
+    }
+
+    .download {
+        position: fixed;
+        bottom: 10px;
+        right: 5px;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+    .download span {
+      display: none; /* Hide text on smaller screens */
+      margin-right: 1000px;
+    }
+  
+  
+    /* Additional adjustments for smaller devices (tablets and below) */
+    .Tabel th,
+    .Tabel td {
+      font-size: 0.7rem; /* Further reduce font size for smaller screens */
+      padding: 6px;
+    }
+
+    .Tabel {
+        margin-left: 70px;
+    }
+
+    .head-card {
+        margin-left: 45px;
+        margin-top: 70px;
+
+    }
+
+    .table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Memastikan konten berada di tengah */
+    margin-left: auto;
+
+    
+}
+.setoranmahasiswa {
+    display: flex;
+    margin-left: 53px;
+    flex-direction: column;
+    align-items: center; /* Memastikan konten berada di tengah */
+}
+
+}
+
+
 </style>

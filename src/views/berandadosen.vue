@@ -17,11 +17,20 @@
 	<div class="welcome">
 		<h2 class="Selamatdatang">Assalamualaikum <span class="namauser" style="font-style: italic;">{{ nama }}</span></h2>
 	</div>
+	<div class="isiparagraf">
+		<p>Setoran ayat mahasiswa TIF adalah platform yang dirancang untuk memudahkan mahasiswa dalam mengatur dan melacak progres hafalan mereka. Dalam konteks ini, hafalan merujuk pada ayat-ayat Al-Qur'an, teks-teks klasik, atau materi akademis lain yang perlu dipelajari dan dihafal secara berkala.
+      </p> <br>
+		<p>Dengan aplikasi ini, mahasiswa dapat dengan mudah merekam setoran hafalan mereka, mendapatkan feedback dari dosen pa atau mentor, serta memantau perkembangan mereka dari waktu ke waktu. Fitur-fitur yang intuitif dan user-friendly memastikan pengalaman pengguna yang menyenangkan dan efektif.
+      </p> <br>
+		<p>Selamat menggunakan Aplikasi Setoran Hafalan Mahasiswa! Semoga alat ini membantu Anda dalam mencapai tujuan akademis dan spiritual Anda dengan lebih teratur dan sistematis. Teruslah berusaha dan jangan pernah berhenti belajar.
+      </p> <br><br><br><br><br>
+      <h3>Setiap hari, sedikit demi sedikit, mari kita tambahkan hafalan Al-Qur'an ke dalam hati kita.</h3>
+    </div>
 </template>
 
 <script>
  import Sidebar from '../components/sidebardosen.vue';
-  import Header from '../components/header.vue';
+  import Header from '../components/headerdosen.vue';
   
   export default {
 	components: {
@@ -92,25 +101,7 @@ button {
 	}
 }
 
-.Header-Beranda {
-background: #FFFFFF;
-position: absolute;
-top: 75px;
-right: 0px;
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 5px 25px 10px 2px;
-box-sizing: border-box;
-width: calc(100% - 225px); 
-border: 1px solid var(--dark);
-}
 
-.beranda {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
 
 .beranda-dosen h3 {

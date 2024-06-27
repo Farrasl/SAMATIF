@@ -60,7 +60,7 @@
   
   <script setup>
   import Sidebar from '../components/sidebardosen.vue';
-  import Header from '../components/header.vue';
+  import Header from '../components/headerdosen.vue';
   import axios from 'axios';
   import { ref, onMounted } from 'vue';
   import { useRoute } from 'vue-router';

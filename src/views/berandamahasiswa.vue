@@ -8,30 +8,24 @@
 	  <router-view />
 	</div>
   
-	<div class="Isi-Beranda">
-	  <div class="Header-Beranda">
-		<div class="beranda">
-		  <h3><i class="bx bxs-home"></i>Beranda</h3>
-		  <span>PA. {{ namaDosen }}</span>
-		</div>
-	  </div>
-	</div>
-  
 	<div class="welcome">
 	  <h2 class="Selamatdatang">Assalamualaikum <span class="namauser" style="font-style: italic;">{{ nama }}</span></h2>
-	</div>
-	<p class="isiparagraf">
-		Aplikasi Setoran Hafalan Mahasiswa adalah platform yang dirancang untuk memudahkan mahasiswa dalam mengatur dan melacak progres hafalan mereka. Dalam konteks ini, hafalan merujuk pada ayat-ayat Al-Qur'an, teks-teks klasik, atau materi akademis lain yang perlu dipelajari dan dihafal secara berkala.
-
-		Dengan aplikasi ini, mahasiswa dapat dengan mudah merekam setoran hafalan mereka, mendapatkan umpan balik dari dosen atau mentor, serta memantau perkembangan mereka dari waktu ke waktu. Fitur-fitur yang intuitif dan user-friendly memastikan pengalaman pengguna yang menyenangkan dan efektif.
-
-		Selamat menggunakan Aplikasi Setoran Hafalan Mahasiswa! Semoga alat ini membantu Anda dalam mencapai tujuan akademis dan spiritual Anda dengan lebih teratur dan sistematis. Teruslah berusaha dan jangan pernah berhenti belajar.
-	  </p>
+    
+  </div>
+  <div class="isiparagraf">
+		<p>Setoran ayat mahasiswa TIF adalah platform yang dirancang untuk memudahkan mahasiswa dalam mengatur dan melacak progres hafalan mereka. Dalam konteks ini, hafalan merujuk pada ayat-ayat Al-Qur'an, teks-teks klasik, atau materi akademis lain yang perlu dipelajari dan dihafal secara berkala.
+      </p> <br>
+		<p>Dengan aplikasi ini, mahasiswa dapat dengan mudah merekam setoran hafalan mereka, mendapatkan umpan balik dari dosen atau mentor, serta memantau perkembangan mereka dari waktu ke waktu. Fitur-fitur yang intuitif dan user-friendly memastikan pengalaman pengguna yang menyenangkan dan efektif.
+      </p> <br>
+		<p>Selamat menggunakan Aplikasi Setoran Hafalan Mahasiswa! Semoga alat ini membantu Anda dalam mencapai tujuan akademis dan spiritual Anda dengan lebih teratur dan sistematis. Teruslah berusaha dan jangan pernah berhenti belajar.
+      </p> <br><br><br><br><br>
+      <h3>Setiap hari, sedikit demi sedikit, mari kita tambahkan hafalan Al-Qur'an ke dalam hati kita.</h3>
+    </div>
   </template>
   
   <script>
   import Sidebar from '../components/sidebarmahasiswa.vue';
-  import Header from '../components/header.vue';
+  import Header from '../components/headermahasiswa.vue';
   import axios from 'axios';
   
   export default {
@@ -47,7 +41,6 @@
 	},
 	mounted() {
 	  this.getNamaUser(); // Panggil fungsi untuk mengambil nama pengguna saat komponen dimuat
-	  this.getNamaDosen(); // Panggil fungsi untuk mengambil nama dosen saat komponen dimuat
 	},
 	methods: {
 	  getNamaUser() {
@@ -57,33 +50,9 @@
 		  const { nama } = JSON.parse(userData); // Ambil nilai nama dari data JSON
 		  this.nama = nama; // Tetapkan nilai nama ke variabel data
 		}
-	  },
-	  async getNamaDosen() {
-		try {
-		  // Ambil NIM dari localStorage
-		  const userData = localStorage.getItem('userData');
-		  if (userData) {
-			const { nim } = JSON.parse(userData);
-			// Ambil token dari localStorage
-			const token = localStorage.getItem('token');
-			// Panggil endpoint dengan NIM yang diambil dari localStorage dan sertakan header otorisasi
-			const response = await axios.get(`https://samatif.xyz/dosenpa/by-nim.php?nim=${nim}`, {
-			  headers: {
-				Authorization: `Bearer ${token}` // Sertakan token dalam header otorisasi
-			  }
-			});
-			if (response.data.status === 'success') {
-			  this.namaDosen = response.data.mahasiswa[0]['Nama Dosen PA']; // Tetapkan nama dosen PA ke variabel data
-			} else {
-			  console.error('Gagal mengambil data dosen:', response.data.message);
-			}
-		  }
-		} catch (error) {
-		  console.error('Error fetching dosen data:', error);
-		}
 	  }
-	}
-  };
+  }
+}
   </script>
   
   <style>
@@ -130,37 +99,8 @@ button {
     }
 }
 
-.Header-Beranda {
-    background: #FFFFFF;
-    position: absolute;
-    top: 75px;
-    right: 0px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: -10px;
-    padding: 5px 25px 10px 2px;
-    box-sizing: border-box;
-    width: calc(100% - 225px); 
-    border: 1px solid var(--dark);
-}
-
-.beranda {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.beranda h3 {
-    margin-right: 475px; 
-}
-
-.beranda span {
-    margin-left: 400px; 
-}
-
 .welcome {
-    margin-top: 150px;
+    margin-top: 90px;
     margin-left: 250px; 
     width: 500px;
     height: 250px;

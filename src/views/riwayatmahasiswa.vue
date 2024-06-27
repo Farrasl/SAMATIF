@@ -7,14 +7,6 @@
 	  <!-- Content -->
 	  <router-view />
 	</div>
-	<div class="Isi-Riwayat">
-	  <div class="Header-Riwayat">
-		<div class="riwayat">
-		  <h3><i class="bx bxs-check-square"></i>Riwayat</h3>
-		  <span> PA. {{ namaDosen }}</span>
-		</div>
-	  </div>
-	</div>
   
 	<table border="2" class="Tabel-Riwayat">
 	  <tr>
@@ -50,7 +42,7 @@
   
   <script setup>
   import Sidebar from '../components/sidebarmahasiswa.vue';
-  import Header from '../components/header.vue';
+  import Header from '../components/headermahasiswa.vue';
   import axios from 'axios';
   import { ref, onMounted } from 'vue';
   
@@ -87,20 +79,6 @@
             }
         });
         setoranList.value = setoranResponse.data.setoran;
-
-        // Fetch Dosen PA
-        const dosenResponse = await axios.get(`https://samatif.xyz/dosenpa/by-nim.php?nim=${nim}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        if (dosenResponse.data.status === 'error') {
-            console.error('Error fetching PA data:', dosenResponse.data.message);
-            namaDosen.value = 'Tidak ditemukan';
-        } else {
-            const dosenData = dosenResponse.data.mahasiswa[0];
-            namaDosen.value = dosenData ? dosenData['Nama Dosen PA'] : 'Tidak ditemukan';
-        }
 
         // Fetch Skills
         const skillsResponse = await axios.get(`https://samatif.xyz/setoran/sudahbelum.php?nim=${nim}`, {
